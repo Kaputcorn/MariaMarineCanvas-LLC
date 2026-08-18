@@ -1,0 +1,665 @@
+/* =========================================
+   MARY'S MARINE CANVAS
+   LOADING SKELETON
+========================================= */
+
+.page-skeleton {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 99999;
+
+    background: #ffffff;
+
+    overflow-y: auto;
+
+    transition:
+        opacity 0.35s ease,
+        visibility 0.35s ease;
+}
+
+
+/* When JavaScript says loading is finished */
+
+.page-skeleton.skeleton-hidden {
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+}
+
+
+
+/* =========================================
+   BASIC SKELETON ANIMATION
+========================================= */
+
+.skeleton {
+    position: relative;
+
+    overflow: hidden;
+
+    background: #e5eaed;
+
+    border-radius: 8px;
+}
+
+
+.skeleton::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    transform: translateX(-100%);
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.7),
+            transparent
+        );
+
+    animation:
+        skeleton-loading 1.4s infinite;
+}
+
+
+@keyframes skeleton-loading {
+
+    100% {
+        transform:
+            translateX(100%);
+    }
+
+}
+
+
+
+/* =========================================
+   CONTAINER
+========================================= */
+
+.skeleton-container {
+    width: min(90%, 1240px);
+
+    margin: 0 auto;
+}
+
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.skeleton-header {
+    height: 82px;
+
+    border-bottom:
+        1px solid #e4e8eb;
+
+    display: flex;
+
+    align-items: center;
+
+    background: white;
+}
+
+
+.skeleton-header-content {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    width: 100%;
+}
+
+
+.skeleton-brand {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.skeleton-logo {
+    width: 44px;
+
+    height: 44px;
+
+    border-radius: 50%;
+}
+
+
+.skeleton-brand-lines {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+
+.skeleton-brand-title {
+    width: 180px;
+
+    height: 15px;
+}
+
+
+.skeleton-brand-subtitle {
+    width: 125px;
+
+    height: 9px;
+}
+
+
+.skeleton-nav {
+    display: flex;
+
+    gap: 24px;
+
+    align-items: center;
+}
+
+
+.skeleton-nav-link {
+    width: 58px;
+
+    height: 12px;
+}
+
+
+.skeleton-nav-button {
+    width: 105px;
+
+    height: 42px;
+}
+
+
+
+/* =========================================
+   HERO
+========================================= */
+
+.skeleton-hero {
+    min-height: 620px;
+
+    background: #d4dde2;
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+}
+
+
+.skeleton-hero::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(7, 26, 43, 0.22),
+            transparent
+        );
+}
+
+
+.skeleton-hero-content {
+    position: relative;
+
+    width: min(90%, 1240px);
+
+    margin: 0 auto;
+}
+
+
+.skeleton-hero-inner {
+    max-width: 650px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+}
+
+
+.skeleton-eyebrow {
+    width: 240px;
+
+    height: 28px;
+
+    border-radius: 30px;
+}
+
+
+.skeleton-title-one {
+    width: 92%;
+
+    height: 57px;
+}
+
+
+.skeleton-title-two {
+    width: 72%;
+
+    height: 57px;
+}
+
+
+.skeleton-description {
+    width: 82%;
+
+    height: 18px;
+}
+
+
+.skeleton-description-short {
+    width: 65%;
+
+    height: 18px;
+}
+
+
+.skeleton-buttons {
+    display: flex;
+
+    gap: 12px;
+
+    margin-top: 12px;
+}
+
+
+.skeleton-button {
+    width: 145px;
+
+    height: 50px;
+}
+
+
+
+/* =========================================
+   INTRO
+========================================= */
+
+.skeleton-intro {
+    padding: 38px 0;
+
+    border-bottom:
+        1px solid #e1e6e9;
+}
+
+
+.skeleton-intro-grid {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 70px;
+
+    align-items: center;
+}
+
+
+.skeleton-small-line {
+    width: 130px;
+
+    height: 10px;
+
+    margin-bottom: 12px;
+}
+
+
+.skeleton-intro-heading {
+    width: 70%;
+
+    height: 24px;
+}
+
+
+.skeleton-intro-copy {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+
+.skeleton-copy-line {
+    width: 100%;
+
+    height: 13px;
+}
+
+
+.skeleton-copy-line-short {
+    width: 75%;
+
+    height: 13px;
+}
+
+
+
+/* =========================================
+   MAIN SECTIONS
+========================================= */
+
+.skeleton-section {
+    padding: 90px 0;
+}
+
+
+.skeleton-section-light {
+    background: #f7f9fa;
+}
+
+
+.skeleton-section-heading {
+    width: 330px;
+
+    height: 38px;
+
+    margin-bottom: 12px;
+}
+
+
+.skeleton-section-subtitle {
+    width: 480px;
+
+    max-width: 90%;
+
+    height: 15px;
+
+    margin-bottom: 42px;
+}
+
+
+
+/* =========================================
+   CARDS
+========================================= */
+
+.skeleton-card-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 24px;
+}
+
+
+.skeleton-card {
+    background: white;
+
+    border:
+        1px solid #e1e6e9;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+
+.skeleton-card-image {
+    height: 230px;
+
+    border-radius: 0;
+}
+
+
+.skeleton-card-content {
+    padding: 25px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+
+.skeleton-card-number {
+    width: 25px;
+
+    height: 10px;
+}
+
+
+.skeleton-card-title {
+    width: 65%;
+
+    height: 20px;
+}
+
+
+.skeleton-card-text {
+    width: 100%;
+
+    height: 12px;
+}
+
+
+.skeleton-card-text-short {
+    width: 75%;
+
+    height: 12px;
+}
+
+
+
+/* =========================================
+   PORTFOLIO
+========================================= */
+
+.skeleton-work-main {
+    width: 100%;
+
+    height: 390px;
+
+    margin-bottom: 22px;
+
+    border-radius: 14px;
+}
+
+
+.skeleton-work-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 22px;
+}
+
+
+.skeleton-work-item {
+    height: 290px;
+
+    border-radius: 14px;
+}
+
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 800px) {
+
+    .skeleton-header {
+        height: 72px;
+    }
+
+
+    .skeleton-brand-title {
+        width: 150px;
+    }
+
+
+    .skeleton-brand-subtitle {
+        display: none;
+    }
+
+
+    .skeleton-nav {
+        display: none;
+    }
+
+
+    .skeleton-menu {
+        display: block;
+
+        width: 40px;
+
+        height: 40px;
+    }
+
+
+    .skeleton-hero {
+        min-height:
+            calc(100svh - 72px);
+    }
+
+
+    .skeleton-title-one {
+        width: 100%;
+
+        height: 46px;
+    }
+
+
+    .skeleton-title-two {
+        width: 78%;
+
+        height: 46px;
+    }
+
+
+    .skeleton-intro-grid {
+        grid-template-columns: 1fr;
+
+        gap: 22px;
+    }
+
+
+    .skeleton-card-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .skeleton-work-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .skeleton-work-main {
+        height: 280px;
+    }
+
+
+    .skeleton-work-item {
+        height: 250px;
+    }
+
+}
+
+
+
+/* =========================================
+   SMALL PHONES
+========================================= */
+
+@media (max-width: 500px) {
+
+    .skeleton-container {
+        width: 92%;
+    }
+
+
+    .skeleton-brand-title {
+        width: 135px;
+
+        height: 13px;
+    }
+
+
+    .skeleton-logo {
+        width: 39px;
+
+        height: 39px;
+    }
+
+
+    .skeleton-hero-content {
+        width: 92%;
+    }
+
+
+    .skeleton-eyebrow {
+        width: 190px;
+    }
+
+
+    .skeleton-title-one,
+    .skeleton-title-two {
+        height: 39px;
+    }
+
+
+    .skeleton-buttons {
+        flex-direction: column;
+    }
+
+
+    .skeleton-button {
+        width: 100%;
+    }
+
+
+    .skeleton-section {
+        padding: 65px 0;
+    }
+
+
+    .skeleton-section-heading {
+        width: 85%;
+    }
+
+}
+
+
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .skeleton::after {
+        animation: none;
+    }
+
+
+    .page-skeleton {
+        transition: none;
+    }
+
+}
