@@ -1,0 +1,124 @@
+/* ==============================
+   ABOUT / CRAFTSMANSHIP
+============================== */
+
+.craft-section {
+    padding:
+        130px 0;
+
+    background:
+        var(--off-white);
+}
+
+
+.craft-grid {
+    display: grid;
+
+    grid-template-columns:
+        1.05fr 0.95fr;
+
+    gap: 100px;
+
+    align-items: center;
+}
+
+
+.craft-image {
+    min-height: 700px;
+}
+
+
+.craft-copy {
+    max-width: 570px;
+}
+
+
+.craft-lead {
+    margin-top: 28px;
+
+    color: var(--muted);
+
+    font-size: 17px;
+}
+
+
+.craft-points {
+    margin-top: 42px;
+
+    border-top:
+        1px solid var(--line);
+}
+
+
+.craft-point {
+    display: grid;
+
+    grid-template-columns:
+        50px 1fr;
+
+    gap: 18px;
+
+    padding:
+        22px 0;
+
+    border-bottom:
+        1px solid var(--line);
+}
+
+
+.craft-point > span {
+    color: var(--tan);
+
+    font-family: var(--serif);
+
+    font-size: 20px;
+}
+
+
+.craft-point strong {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: var(--navy);
+
+    font-size: 13px;
+}
+
+
+.craft-point p {
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+
+
+/* ==============================
+   TABLET
+============================== */
+
+@media (max-width: 1050px) {
+
+    .craft-grid {
+        gap: 60px;
+    }
+
+}
+
+
+
+/* ==============================
+   MOBILE
+============================== */
+
+@media (max-width: 820px) {
+
+    .craft-grid {
+        grid-template-columns:
+            1fr;
+
+        gap: 34px;
+    }
+
+}

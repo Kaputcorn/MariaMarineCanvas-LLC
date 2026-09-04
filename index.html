@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
 
     <meta charset="UTF-8">
@@ -7,24 +10,12 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>
-        Mary's Marine Canvas
-    </title>
-
+    <title>Mary's Marine Canvas</title>
 
     <meta
         name="description"
-        content="Mary's Marine Canvas provides custom marine canvas, boat covers, enclosures, upholstery, and professional marine craftsmanship."
+        content="Mary's Marine Canvas provides custom boat canvas, biminis, enclosures, covers, marine upholstery, repairs, and custom marine fabrication."
     >
-
-
-    <!--
-        Content Security Policy
-
-        Google Fonts:
-        fonts.googleapis.com = Google Fonts CSS
-        fonts.gstatic.com = actual font files
-    -->
 
     <meta
         http-equiv="Content-Security-Policy"
@@ -42,14 +33,10 @@
         "
     >
 
-
     <meta
         name="referrer"
         content="strict-origin-when-cross-origin"
     >
-
-
-    <!-- Improve Google Fonts loading -->
 
     <link
         rel="preconnect"
@@ -62,28 +49,1300 @@
         crossorigin
     >
 
-
-    <!-- LATO FONT -->
-
     <link
-        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,400;1,700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,400&display=swap"
         rel="stylesheet"
     >
 
-
-    <!-- MAIN WEBSITE CSS -->
-
-    <link
-        rel="stylesheet"
-        href="css/style.css"
-    >
-
-
-    <!-- LOADING SKELETON CSS -->
-
-    <link
-        rel="stylesheet"
-        href="css/skeleton.css"
-    >
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/services.css">
+    <link rel="stylesheet" href="css/work.css">
+    <link rel="stylesheet" href="css/about.css">
+    <link rel="stylesheet" href="css/skeleton.css">
 
 </head>
+
+
+<body>
+
+    <!-- =========================
+         LOADING SKELETON
+    ========================== -->
+
+    <div
+        class="page-skeleton"
+        id="pageSkeleton"
+        aria-hidden="true"
+    >
+
+        <div class="skeleton-header">
+
+            <div class="skeleton-container skeleton-header-content">
+
+                <div class="skeleton-brand">
+
+                    <div class="skeleton skeleton-logo"></div>
+
+                    <div class="skeleton-brand-lines">
+
+                        <div class="skeleton skeleton-brand-title"></div>
+                        <div class="skeleton skeleton-brand-subtitle"></div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="skeleton-nav">
+
+                    <div class="skeleton skeleton-nav-link"></div>
+                    <div class="skeleton skeleton-nav-link"></div>
+                    <div class="skeleton skeleton-nav-link"></div>
+                    <div class="skeleton skeleton-nav-link"></div>
+                    <div class="skeleton skeleton-nav-button"></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="skeleton-hero">
+
+            <div class="skeleton-hero-content">
+
+                <div class="skeleton-hero-inner">
+
+                    <div class="skeleton skeleton-eyebrow"></div>
+                    <div class="skeleton skeleton-title-one"></div>
+                    <div class="skeleton skeleton-title-two"></div>
+                    <div class="skeleton skeleton-description"></div>
+                    <div class="skeleton skeleton-description-short"></div>
+
+                    <div class="skeleton-buttons">
+
+                        <div class="skeleton skeleton-button"></div>
+                        <div class="skeleton skeleton-button"></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <header class="site-header">
+
+        <div class="container nav-container">
+
+            <a
+                href="index.html"
+                class="brand"
+                aria-label="Mary's Marine Canvas home"
+            >
+
+                <div class="brand-mark">
+                    M
+                </div>
+
+                <div class="brand-text">
+
+                    <span class="brand-name">
+                        Mary's Marine Canvas
+                    </span>
+
+                    <span class="brand-tagline">
+                        Boat Canvas &amp; Upholstery Services
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <button
+                class="mobile-menu-button"
+                id="mobileMenuButton"
+                type="button"
+                aria-label="Open navigation menu"
+                aria-expanded="false"
+                aria-controls="mainNavigation"
+            >
+
+                <span></span>
+                <span></span>
+                <span></span>
+
+            </button>
+
+
+            <nav
+                id="mainNavigation"
+                aria-label="Main Navigation"
+            >
+
+                <a href="pages/work.html">
+                    Work
+                </a>
+
+                <a href="pages/services.html">
+                    Services
+                </a>
+
+                <a href="pages/about.html">
+                    About
+                </a>
+
+                <a href="pages/contact.html">
+                    Contact
+                </a>
+
+                <a
+                    href="pages/contact.html#contact-options"
+                    class="nav-contact"
+                >
+                    Request a Quote
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+
+    <main>
+
+        <!-- =========================
+             HERO
+        ========================== -->
+
+        <section
+            class="hero"
+            id="home"
+        >
+
+            <div class="hero-photo-placeholder">
+
+                <span>
+                    Future Full-Width Marine Project Photo
+                </span>
+
+            </div>
+
+
+            <div class="hero-overlay"></div>
+
+
+            <div class="container hero-content">
+
+                <div class="hero-copy">
+
+                    <span class="hero-kicker">
+                        Boat Canvas &amp; Upholstery Services • Established 2021
+                    </span>
+
+
+                    <h1>
+                        Custom Marine Canvas
+                        <em>&amp; Upholstery</em>
+                    </h1>
+
+
+                    <p class="hero-subtitle">
+                        Built for the water. Made for your boat.
+                    </p>
+
+
+                    <p class="hero-description">
+                        Custom-fit canvas, enclosures, covers,
+                        and upholstery made with durability,
+                        practical use, and a clean finished look in mind.
+                    </p>
+
+
+                    <div class="hero-actions">
+
+                        <a
+                            href="pages/work.html"
+                            class="button button-light"
+                        >
+                            View Our Work
+                        </a>
+
+                        <a
+                            href="pages/contact.html#contact-options"
+                            class="button button-outline-light"
+                        >
+                            Request a Quote
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="hero-bottom-note">
+
+                <div class="container hero-note-grid">
+
+                    <span>
+                        Established 2021
+                    </span>
+
+                    <span>
+                        Custom Marine Work
+                    </span>
+
+                    <span>
+                        Made for Your Boat
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             INTRO
+        ========================== -->
+
+        <section class="intro-section reveal">
+
+            <div class="container intro-grid">
+
+                <div>
+
+                    <span class="section-label">
+                        Mary's Marine Canvas
+                    </span>
+
+                    <h2 class="display-heading">
+                        Custom work.
+                        <br>
+                        Built to last.
+                    </h2>
+
+                </div>
+
+
+                <div class="intro-copy">
+
+                    <p class="intro-lead">
+                        Every boat is different,
+                        and the work should fit the boat properly.
+                    </p>
+
+                    <p>
+                        Mary's Marine Canvas builds custom marine canvas
+                        and upholstery with careful measurements,
+                        durable materials, and attention to fit and finish.
+                        The goal is simple: make something that works well,
+                        looks right, and holds up on the water.
+                    </p>
+
+                    <a
+                        href="pages/services.html"
+                        class="text-link"
+                    >
+                        Explore our services
+                        <span>→</span>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             SERVICES
+        ========================== -->
+
+        <section
+            class="services-section"
+            id="services"
+        >
+
+            <div class="container">
+
+                <div class="section-top reveal">
+
+                    <div>
+
+                        <span class="section-label">
+                            Services
+                        </span>
+
+                        <h2 class="display-heading">
+                            Made specifically
+                            <br>
+                            for your boat.
+                        </h2>
+
+                    </div>
+
+
+                    <p>
+                        Whether you need protection from the weather,
+                        a new enclosure, or refreshed seating,
+                        each project is built around the boat
+                        and how you use it.
+                    </p>
+
+                </div>
+
+
+                <article class="service-feature reveal">
+
+                    <div class="service-feature-image placeholder-image">
+
+                        <span>
+                            Boat Canvas / Cover Photo
+                        </span>
+
+                    </div>
+
+
+                    <div class="service-feature-copy">
+
+                        <span class="service-index">
+                            01
+                        </span>
+
+                        <span class="section-label">
+                            Boat Canvas
+                        </span>
+
+                        <h3>
+                            Covers, biminis,
+                            and custom protection.
+                        </h3>
+
+                        <p>
+                            Custom canvas work made to protect your boat
+                            while keeping the fit neat,
+                            secure, and easy to use.
+                        </p>
+
+
+                        <ul class="service-list">
+
+                            <li>Biminis</li>
+                            <li>Cockpit Covers</li>
+                            <li>Bridge Covers</li>
+                            <li>Sail Covers</li>
+                            <li>Navy Tops</li>
+
+                        </ul>
+
+                    </div>
+
+                </article>
+
+
+                <article class="service-feature service-feature-reverse reveal">
+
+                    <div class="service-feature-image placeholder-image">
+
+                        <span>
+                            Enclosure / Clear Panel Photo
+                        </span>
+
+                    </div>
+
+
+                    <div class="service-feature-copy">
+
+                        <span class="service-index">
+                            02
+                        </span>
+
+                        <span class="section-label">
+                            Enclosures
+                        </span>
+
+                        <h3>
+                            Weather protection
+                            without losing visibility.
+                        </h3>
+
+                        <p>
+                            Custom enclosure work designed to provide
+                            protection from wind and weather
+                            while keeping visibility and access practical.
+                        </p>
+
+
+                        <ul class="service-list">
+
+                            <li>Full Enclosures</li>
+                            <li>Isinglass</li>
+                            <li>Clear Panels</li>
+                            <li>Dodgers</li>
+                            <li>Panel Replacement</li>
+
+                        </ul>
+
+                    </div>
+
+                </article>
+
+
+                <article class="service-feature reveal">
+
+                    <div class="service-feature-image placeholder-image">
+
+                        <span>
+                            Marine Upholstery Photo
+                        </span>
+
+                    </div>
+
+
+                    <div class="service-feature-copy">
+
+                        <span class="service-index">
+                            03
+                        </span>
+
+                        <span class="section-label">
+                            Marine Upholstery
+                        </span>
+
+                        <h3>
+                            Comfortable, durable,
+                            and made for marine use.
+                        </h3>
+
+                        <p>
+                            Upholstery work for seats, cushions,
+                            and other marine surfaces with attention
+                            to comfort, appearance, and long-term use.
+                        </p>
+
+
+                        <ul class="service-list">
+
+                            <li>Boat Seats</li>
+                            <li>Cushions</li>
+                            <li>Bolsters</li>
+                            <li>Interior Upholstery</li>
+                            <li>Exterior Upholstery</li>
+
+                        </ul>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             SELECTED WORK
+        ========================== -->
+
+        <section
+            class="work-section"
+            id="work"
+        >
+
+            <div class="container">
+
+                <div class="section-top reveal">
+
+                    <div>
+
+                        <span class="section-label section-label-light">
+                            Selected Work
+                        </span>
+
+                        <h2 class="display-heading display-heading-light">
+                            The work speaks
+                            <br>
+                            for itself.
+                        </h2>
+
+                    </div>
+
+
+                    <p class="work-intro">
+                        A closer look at custom canvas,
+                        enclosures, upholstery,
+                        and specialty marine work.
+                    </p>
+
+                </div>
+
+
+                <div class="portfolio-toolbar reveal">
+
+                    <div
+                        class="portfolio-filters"
+                        aria-label="Filter projects"
+                    >
+
+                        <button
+                            class="filter-button active"
+                            type="button"
+                            data-filter="all"
+                            aria-pressed="true"
+                        >
+                            All
+                        </button>
+
+                        <button
+                            class="filter-button"
+                            type="button"
+                            data-filter="covers"
+                            aria-pressed="false"
+                        >
+                            Canvas
+                        </button>
+
+                        <button
+                            class="filter-button"
+                            type="button"
+                            data-filter="enclosures"
+                            aria-pressed="false"
+                        >
+                            Enclosures
+                        </button>
+
+                        <button
+                            class="filter-button"
+                            type="button"
+                            data-filter="upholstery"
+                            aria-pressed="false"
+                        >
+                            Upholstery
+                        </button>
+
+                        <button
+                            class="filter-button"
+                            type="button"
+                            data-filter="specialty"
+                            aria-pressed="false"
+                        >
+                            Specialty
+                        </button>
+
+                    </div>
+
+
+                    <p
+                        class="project-count"
+                        id="projectCount"
+                        aria-live="polite"
+                    >
+                        Loading projects
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="portfolio-grid"
+                    id="portfolioGrid"
+                ></div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             CRAFTSMANSHIP
+        ========================== -->
+
+        <section
+            class="craft-section"
+            id="about"
+        >
+
+            <div class="container craft-grid">
+
+                <div class="craft-image placeholder-image reveal">
+
+                    <span>
+                        Workshop / Stitching / Fabrication Photo
+                    </span>
+
+                </div>
+
+
+                <div class="craft-copy reveal">
+
+                    <span class="section-label">
+                        Craftsmanship
+                    </span>
+
+                    <h2 class="display-heading">
+                        Crafted for
+                        <br>
+                        the water.
+                    </h2>
+
+
+                    <p class="craft-lead">
+                        Good marine work comes down to more than fabric.
+                        The fit, construction, hardware, seams,
+                        and finishing details all matter.
+                    </p>
+
+
+                    <div class="craft-points">
+
+                        <div class="craft-point">
+
+                            <span>01</span>
+
+                            <div>
+
+                                <strong>
+                                    Marine-grade materials
+                                </strong>
+
+                                <p>
+                                    Materials chosen for regular
+                                    exposure to marine conditions.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="craft-point">
+
+                            <span>02</span>
+
+                            <div>
+
+                                <strong>
+                                    Custom patterns
+                                </strong>
+
+                                <p>
+                                    Built around the actual shape
+                                    and layout of your boat.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="craft-point">
+
+                            <span>03</span>
+
+                            <div>
+
+                                <strong>
+                                    Careful fitting
+                                </strong>
+
+                                <p>
+                                    Proper alignment, tension,
+                                    coverage, and access.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="craft-point">
+
+                            <span>04</span>
+
+                            <div>
+
+                                <strong>
+                                    Attention to detail
+                                </strong>
+
+                                <p>
+                                    Clean seams and finishing touches
+                                    that make the completed job look right.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             PROCESS
+        ========================== -->
+
+        <section class="process-section">
+
+            <div class="container">
+
+                <div class="process-heading reveal">
+
+                    <span class="section-label section-label-light">
+                        Our Process
+                    </span>
+
+                    <h2 class="display-heading display-heading-light">
+                        Straightforward
+                        <br>
+                        from start to finish.
+                    </h2>
+
+                </div>
+
+
+                <div class="process-grid">
+
+                    <article class="process-step reveal">
+
+                        <span class="process-number">
+                            01
+                        </span>
+
+                        <h3>
+                            Consult
+                        </h3>
+
+                        <p>
+                            Tell us what you need,
+                            how the boat is used,
+                            and what you want the finished project to do.
+                        </p>
+
+                    </article>
+
+
+                    <article class="process-step reveal">
+
+                        <span class="process-number">
+                            02
+                        </span>
+
+                        <h3>
+                            Measure
+                        </h3>
+
+                        <p>
+                            The boat is measured or patterned
+                            so the work can be made for the actual fit.
+                        </p>
+
+                    </article>
+
+
+                    <article class="process-step reveal">
+
+                        <span class="process-number">
+                            03
+                        </span>
+
+                        <h3>
+                            Fabricate
+                        </h3>
+
+                        <p>
+                            The piece is built using materials
+                            suited for marine use and careful construction.
+                        </p>
+
+                    </article>
+
+
+                    <article class="process-step reveal">
+
+                        <span class="process-number">
+                            04
+                        </span>
+
+                        <h3>
+                            Install
+                        </h3>
+
+                        <p>
+                            The completed project is fitted,
+                            checked, and adjusted as needed.
+                        </p>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             WHY MARY'S
+        ========================== -->
+
+        <section class="why-marys-section">
+
+            <div class="container why-marys-grid">
+
+                <div class="reveal">
+
+                    <span class="section-label">
+                        Why Mary's
+                    </span>
+
+                    <h2 class="display-heading">
+                        Real craftsmanship.
+                        <br>
+                        Personal service.
+                    </h2>
+
+                </div>
+
+
+                <div class="why-marys-copy reveal">
+
+                    <p class="why-marys-lead">
+                        Custom work should feel personal,
+                        straightforward, and made for the boat in front of you.
+                    </p>
+
+                    <p>
+                        Mary's Marine Canvas has provided boat canvas
+                        and upholstery services since 2021,
+                        with a focus on careful work and
+                        a finished product made specifically for each project.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             CONTACT CTA
+        ========================== -->
+
+        <section
+            class="quote-section"
+            id="contact"
+        >
+
+            <div class="quote-photo-placeholder">
+
+                <span>
+                    Future Finished Boat Photo
+                </span>
+
+            </div>
+
+
+            <div class="quote-overlay"></div>
+
+
+            <div class="container quote-content reveal">
+
+                <span class="section-label section-label-light">
+                    Start a Project
+                </span>
+
+                <h2>
+                    Have a project?
+                </h2>
+
+                <p>
+                    Tell us about your boat and what you need.
+                    Call or email Mary's Marine Canvas
+                    to start talking about your project.
+                </p>
+
+
+                <div class="hero-actions quote-actions">
+
+                    <a
+                        href="tel:+19145653426"
+                        class="button button-light button-large"
+                    >
+                        Call 914-565-3426
+                    </a>
+
+                    <a
+                        href="pages/contact.html#contact-options"
+                        class="button button-outline-light button-large"
+                    >
+                        Request a Quote
+                    </a>
+
+                </div>
+
+
+                <p class="contact-direct">
+                    MMCUPHOLSTERY@GMAIL.COM
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer class="site-footer">
+
+        <div class="container footer-grid">
+
+            <div class="footer-main">
+
+                <div class="footer-brand-mark">
+                    M
+                </div>
+
+                <h2>
+                    Mary's Marine Canvas
+                </h2>
+
+                <p>
+                    Boat Canvas &amp; Upholstery Services
+                    <br>
+                    Established 2021
+                </p>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h3>
+                    Canvas
+                </h3>
+
+                <a href="pages/services.html#boat-canvas">
+                    Biminis
+                </a>
+
+                <a href="pages/services.html#boat-canvas">
+                    Navy Tops
+                </a>
+
+                <a href="pages/services.html#boat-canvas">
+                    Cockpit Covers
+                </a>
+
+                <a href="pages/services.html#boat-canvas">
+                    Bridge Covers
+                </a>
+
+                <a href="pages/services.html#boat-canvas">
+                    Sail Covers
+                </a>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h3>
+                    More Services
+                </h3>
+
+                <a href="pages/services.html#enclosures">
+                    Enclosures
+                </a>
+
+                <a href="pages/services.html#enclosures">
+                    Dodgers
+                </a>
+
+                <a href="pages/services.html#enclosures">
+                    Clear Panels
+                </a>
+
+                <a href="pages/services.html#marine-upholstery">
+                    Marine Upholstery
+                </a>
+
+                <a href="pages/work.html">
+                    Canvas Repairs
+                </a>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h3>
+                    Contact
+                </h3>
+
+                <a href="tel:+19145653426">
+                    914-565-3426
+                </a>
+
+                <a
+                    href="mailto:mmcupholstery@gmail.com?subject=Marine%20Canvas%20Quote%20Request"
+                >
+                    MMCUPHOLSTERY@GMAIL.COM
+                </a>
+
+                <a href="pages/work.html">
+                    View Our Work
+                </a>
+
+                <a href="pages/contact.html#contact-options">
+                    Request a Quote
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="container footer-bottom">
+
+            <span>
+                &copy; 2026 Mary's Marine Canvas.
+                All rights reserved.
+            </span>
+
+            <span>
+                Established 2021
+            </span>
+
+            <a href="#home">
+                Back to top ↑
+            </a>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- =========================
+         PROJECT MODAL
+    ========================== -->
+
+    <div
+        class="project-modal"
+        id="projectModal"
+        hidden
+    >
+
+        <div
+            class="project-modal-backdrop"
+            data-modal-close
+        ></div>
+
+
+        <div
+            class="project-modal-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="projectModalTitle"
+            aria-describedby="projectModalDescription"
+        >
+
+            <button
+                class="project-modal-close"
+                id="projectModalClose"
+                type="button"
+                aria-label="Close project gallery"
+            >
+                ×
+            </button>
+
+
+            <div class="project-gallery">
+
+                <div
+                    class="project-gallery-main"
+                    id="projectModalImageContainer"
+                ></div>
+
+                <button
+                    class="gallery-navigation gallery-previous"
+                    id="galleryPrevious"
+                    type="button"
+                    aria-label="Previous project photo"
+                >
+                    ‹
+                </button>
+
+                <button
+                    class="gallery-navigation gallery-next"
+                    id="galleryNext"
+                    type="button"
+                    aria-label="Next project photo"
+                >
+                    ›
+                </button>
+
+                <div
+                    class="gallery-counter"
+                    id="galleryCounter"
+                    aria-live="polite"
+                >
+                    1 / 1
+                </div>
+
+            </div>
+
+
+            <div
+                class="gallery-thumbnails"
+                id="galleryThumbnails"
+                aria-label="Project photo thumbnails"
+            ></div>
+
+
+            <div class="project-modal-content">
+
+                <span
+                    class="section-label"
+                    id="projectModalType"
+                >
+                    Project Type
+                </span>
+
+                <h2 id="projectModalTitle">
+                    Project Title
+                </h2>
+
+                <p id="projectModalDescription">
+                    Project description.
+                </p>
+
+
+                <section
+                    class="before-after-section"
+                    id="beforeAfterSection"
+                    hidden
+                >
+
+                    <div class="before-after-heading">
+
+                        <span class="section-label">
+                            Before &amp; After
+                        </span>
+
+                        <h3>
+                            See the transformation.
+                        </h3>
+
+                    </div>
+
+
+                    <div class="before-after-grid">
+
+                        <div class="before-after-item">
+
+                            <span class="before-after-label">
+                                Before
+                            </span>
+
+                            <div
+                                class="before-after-image"
+                                id="beforeImageContainer"
+                            ></div>
+
+                        </div>
+
+
+                        <div class="before-after-item">
+
+                            <span class="before-after-label">
+                                After
+                            </span>
+
+                            <div
+                                class="before-after-image"
+                                id="afterImageContainer"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <a
+                    href="pages/contact.html#contact-options"
+                    class="button button-navy"
+                    id="projectModalQuote"
+                >
+                    Ask About Similar Work
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- BACK TO TOP -->
+
+    <button
+        class="back-to-top"
+        id="backToTop"
+        type="button"
+        aria-label="Back to top"
+    >
+        ↑
+    </button>
+
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="js/skeleton.js"></script>
+    <script src="js/projects.js"></script>
+    <script src="js/script.js"></script>
+
+</body>
+
+</html>
