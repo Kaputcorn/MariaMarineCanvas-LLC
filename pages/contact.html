@@ -26,8 +26,8 @@
             script-src 'self';
             style-src 'self' https://fonts.googleapis.com;
             font-src 'self' https://fonts.gstatic.com;
-            img-src 'self' data:;
-            connect-src 'self';
+            img-src 'self' data: blob:;
+            connect-src 'self' http://localhost:3000 http://127.0.0.1:3000;
             object-src 'none';
             frame-src 'none';
             base-uri 'self';
@@ -56,8 +56,15 @@
         rel="stylesheet"
     >
 
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/contact.css">
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/contact.css"
+    >
 
 </head>
 
@@ -74,7 +81,10 @@
                 aria-label="Mary's Marine Canvas home"
             >
 
-                <div class="brand-mark">M</div>
+                <div class="brand-mark">
+                    M
+                </div>
+
 
                 <div class="brand-text">
 
@@ -145,6 +155,7 @@
     </header>
 
 
+
     <main>
 
         <section class="intro-section">
@@ -194,6 +205,7 @@
         </section>
 
 
+
         <section
             class="quote-form-section"
             id="contact-options"
@@ -201,7 +213,10 @@
 
             <div class="container">
 
-                <div class="quote-form-heading reveal">
+                <div
+                    class="quote-form-heading reveal"
+                    id="quoteFormHeading"
+                >
 
                     <span class="section-label">
                         Request a Quote
@@ -223,7 +238,11 @@
                 </div>
 
 
-                <div class="quote-form-layout">
+
+                <div
+                    class="quote-form-layout"
+                    id="quoteFormLayout"
+                >
 
                     <aside class="quote-contact-card reveal">
 
@@ -244,7 +263,9 @@
 
                         <div class="quote-contact-method">
 
-                            <span>Phone</span>
+                            <span>
+                                Phone
+                            </span>
 
                             <a href="tel:+19145653426">
                                 914-565-3426
@@ -255,7 +276,9 @@
 
                         <div class="quote-contact-method">
 
-                            <span>Email</span>
+                            <span>
+                                Email
+                            </span>
 
                             <a
                                 href="mailto:mmcupholstery@gmail.com?subject=Marine%20Canvas%20Quote%20Request"
@@ -273,6 +296,7 @@
                             Helpful to have
                         </h4>
 
+
                         <ul class="quote-help-list">
 
                             <li>
@@ -288,7 +312,7 @@
                             </li>
 
                             <li>
-                                Photos, once uploads are added
+                                Photos of the boat or existing work
                             </li>
 
                         </ul>
@@ -296,11 +320,33 @@
                     </aside>
 
 
+
                     <form
                         class="quote-request-form reveal"
                         id="quoteForm"
+                        data-api-url="http://localhost:3000/api/quote"
                         novalidate
                     >
+
+                        <div
+                            class="quote-honeypot"
+                            aria-hidden="true"
+                        >
+
+                            <label for="quoteWebsite">
+                                Website
+                            </label>
+
+                            <input
+                                type="text"
+                                id="quoteWebsite"
+                                name="website"
+                                tabindex="-1"
+                                autocomplete="off"
+                            >
+
+                        </div>
+
 
                         <fieldset class="quote-fieldset">
 
@@ -315,6 +361,7 @@
 
                                     <label for="quoteName">
                                         Full Name
+                                        <span class="required-mark">*</span>
                                     </label>
 
                                     <input
@@ -323,7 +370,15 @@
                                         name="name"
                                         autocomplete="name"
                                         placeholder="Your name"
+                                        maxlength="100"
+                                        aria-describedby="quoteNameError"
                                     >
+
+                                    <span
+                                        class="quote-field-error"
+                                        id="quoteNameError"
+                                        aria-live="polite"
+                                    ></span>
 
                                 </div>
 
@@ -341,7 +396,15 @@
                                         autocomplete="tel"
                                         inputmode="tel"
                                         placeholder="(914) 555-1234"
+                                        maxlength="30"
+                                        aria-describedby="quotePhoneError"
                                     >
+
+                                    <span
+                                        class="quote-field-error"
+                                        id="quotePhoneError"
+                                        aria-live="polite"
+                                    ></span>
 
                                 </div>
 
@@ -359,11 +422,30 @@
                                         autocomplete="email"
                                         inputmode="email"
                                         placeholder="you@example.com"
+                                        maxlength="254"
+                                        aria-describedby="quoteEmailError"
                                     >
+
+                                    <span
+                                        class="quote-field-error"
+                                        id="quoteEmailError"
+                                        aria-live="polite"
+                                    ></span>
 
                                 </div>
 
                             </div>
+
+
+                            <p class="quote-form-note">
+
+                                <span class="required-mark">*</span>
+
+                                Name is required, and at least one
+                                contact method — phone or email —
+                                must be provided.
+
+                            </p>
 
 
                             <div class="quote-form-group quote-form-full">
@@ -387,7 +469,9 @@
                                             value="phone"
                                         >
 
-                                        <span>Phone</span>
+                                        <span>
+                                            Phone
+                                        </span>
 
                                     </label>
 
@@ -400,7 +484,9 @@
                                             value="email"
                                         >
 
-                                        <span>Email</span>
+                                        <span>
+                                            Email
+                                        </span>
 
                                     </label>
 
@@ -414,15 +500,25 @@
                                             checked
                                         >
 
-                                        <span>Either</span>
+                                        <span>
+                                            Either
+                                        </span>
 
                                     </label>
 
                                 </div>
 
+
+                                <span
+                                    class="quote-field-error"
+                                    id="contactMethodError"
+                                    aria-live="polite"
+                                ></span>
+
                             </div>
 
                         </fieldset>
+
 
 
                         <fieldset class="quote-fieldset">
@@ -445,8 +541,16 @@
                                         id="boatYear"
                                         name="boatYear"
                                         inputmode="numeric"
+                                        maxlength="4"
                                         placeholder="2020"
+                                        aria-describedby="boatYearError"
                                     >
+
+                                    <span
+                                        class="quote-field-error"
+                                        id="boatYearError"
+                                        aria-live="polite"
+                                    ></span>
 
                                 </div>
 
@@ -461,6 +565,7 @@
                                         type="text"
                                         id="boatMake"
                                         name="boatMake"
+                                        maxlength="100"
                                         placeholder="Boat manufacturer"
                                     >
 
@@ -477,6 +582,7 @@
                                         type="text"
                                         id="boatModel"
                                         name="boatModel"
+                                        maxlength="100"
                                         placeholder="Boat model"
                                     >
 
@@ -485,6 +591,7 @@
                             </div>
 
                         </fieldset>
+
 
 
                         <fieldset class="quote-fieldset">
@@ -497,12 +604,20 @@
                             <div class="quote-form-group quote-form-full">
 
                                 <label for="quoteService">
+
                                     What type of work are you looking for?
+
+                                    <span class="required-mark">
+                                        *
+                                    </span>
+
                                 </label>
+
 
                                 <select
                                     id="quoteService"
                                     name="service"
+                                    aria-describedby="quoteServiceError"
                                 >
 
                                     <option value="">
@@ -567,67 +682,173 @@
 
                                 </select>
 
+
+                                <span
+                                    class="quote-field-error"
+                                    id="quoteServiceError"
+                                    aria-live="polite"
+                                ></span>
+
                             </div>
+
 
 
                             <div class="quote-form-group quote-form-full">
 
                                 <label for="quoteDetails">
+
                                     Tell us about the project
+
+                                    <span class="required-mark">
+                                        *
+                                    </span>
+
                                 </label>
+
 
                                 <textarea
                                     id="quoteDetails"
                                     name="details"
                                     rows="7"
+                                    maxlength="2000"
                                     placeholder="Describe what you would like made, repaired, replaced, or changed..."
+                                    aria-describedby="quoteDetailsHelp quoteDetailsError"
                                 ></textarea>
+
+
+                                <div class="quote-textarea-meta">
+
+                                    <span id="quoteDetailsHelp">
+                                        Minimum 15 characters
+                                    </span>
+
+                                    <span id="quoteDetailsCount">
+                                        0 / 2000
+                                    </span>
+
+                                </div>
+
+
+                                <span
+                                    class="quote-field-error"
+                                    id="quoteDetailsError"
+                                    aria-live="polite"
+                                ></span>
 
                             </div>
 
 
-                            <div class="quote-upload-preview">
 
-                                <span class="quote-upload-icon">
-                                    +
-                                </span>
+                            <div class="quote-photo-section">
 
-                                <div>
+                                <div class="quote-photo-heading">
 
-                                    <strong>
-                                        Project photos
-                                    </strong>
+                                    <div>
 
-                                    <p>
-                                        Photo uploads will be added
-                                        in Phase 4.3.
-                                    </p>
+                                        <span class="quote-field-label">
+                                            Project Photos
+                                        </span>
+
+                                        <p>
+                                            Optional. JPG, PNG, or WEBP.
+                                            Maximum 6 photos, 8 MB each,
+                                            and 20 MB total.
+                                        </p>
+
+                                    </div>
+
+
+                                    <span
+                                        class="quote-photo-count"
+                                        id="quotePhotoCount"
+                                    >
+                                        0 / 6 photos
+                                    </span>
 
                                 </div>
+
+
+                                <label
+                                    class="quote-upload-area"
+                                    id="quoteUploadArea"
+                                    for="quotePhotos"
+                                >
+
+                                    <span class="quote-upload-icon">
+                                        +
+                                    </span>
+
+
+                                    <div>
+
+                                        <strong>
+                                            Add project photos
+                                        </strong>
+
+                                        <p>
+                                            Photos can help Mary understand
+                                            the project before contacting you.
+                                        </p>
+
+                                    </div>
+
+
+                                    <span class="quote-upload-button">
+                                        Choose Photos
+                                    </span>
+
+                                </label>
+
+
+                                <input
+                                    class="quote-file-input"
+                                    type="file"
+                                    id="quotePhotos"
+                                    name="photos"
+                                    accept="image/jpeg,image/png,image/webp"
+                                    multiple
+                                    aria-describedby="quotePhotosError"
+                                >
+
+
+                                <span
+                                    class="quote-field-error"
+                                    id="quotePhotosError"
+                                    aria-live="polite"
+                                ></span>
+
+
+                                <div
+                                    class="quote-photo-preview-grid"
+                                    id="quotePhotoPreviewGrid"
+                                    aria-live="polite"
+                                ></div>
 
                             </div>
 
                         </fieldset>
 
 
+
                         <div class="quote-submit-area">
 
                             <button
-                                type="button"
+                                type="submit"
                                 class="button button-navy button-large quote-submit-button"
+                                id="quoteSubmitButton"
                                 disabled
-                                aria-disabled="true"
                             >
                                 Submit Quote Request
                             </button>
 
+
                             <p
                                 class="quote-form-status"
                                 id="quoteFormStatus"
+                                aria-live="polite"
                             >
-                                Online submission is being connected.
-                                For now, please call or email
-                                Mary's Marine Canvas directly.
+                                Complete the required fields
+                                to prepare your quote request.
                             </p>
 
                         </div>
@@ -636,9 +857,182 @@
 
                 </div>
 
+
+                <section
+                    class="quote-receipt"
+                    id="quoteReceipt"
+                    aria-labelledby="quoteReceiptTitle"
+                    tabindex="-1"
+                    hidden
+                >
+
+                    <div class="quote-receipt-header">
+
+                        <div>
+
+                            <span class="quote-receipt-status">
+                                Request Received
+                            </span>
+
+                            <h2
+                                class="display-heading"
+                                id="quoteReceiptTitle"
+                            >
+                                Your quote request
+                                <br>
+                                has been sent.
+                            </h2>
+
+                            <p>
+                                Mary's Marine Canvas received your project information.
+                                Keep the confirmation number below for your records.
+                            </p>
+
+                        </div>
+
+
+                        <div
+                            class="quote-receipt-confirmation"
+                            aria-label="Quote confirmation information"
+                        >
+
+                            <span>Confirmation ID</span>
+
+                            <strong id="receiptConfirmationId">
+                                —
+                            </strong>
+
+                            <span>Submitted</span>
+
+                            <strong id="receiptSubmittedAt">
+                                —
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="quote-receipt-body">
+
+                        <section class="quote-receipt-group">
+
+                            <h3>Customer</h3>
+
+                            <dl class="quote-receipt-list">
+
+                                <div>
+                                    <dt>Name</dt>
+                                    <dd id="receiptName">—</dd>
+                                </div>
+
+                                <div>
+                                    <dt>Phone</dt>
+                                    <dd id="receiptPhone">—</dd>
+                                </div>
+
+                                <div>
+                                    <dt>Email</dt>
+                                    <dd id="receiptEmail">—</dd>
+                                </div>
+
+                                <div>
+                                    <dt>Preferred Contact</dt>
+                                    <dd id="receiptContactMethod">—</dd>
+                                </div>
+
+                            </dl>
+
+                        </section>
+
+
+                        <section class="quote-receipt-group">
+
+                            <h3>Boat</h3>
+
+                            <dl class="quote-receipt-list">
+
+                                <div>
+                                    <dt>Year</dt>
+                                    <dd id="receiptBoatYear">—</dd>
+                                </div>
+
+                                <div>
+                                    <dt>Make</dt>
+                                    <dd id="receiptBoatMake">—</dd>
+                                </div>
+
+                                <div>
+                                    <dt>Model</dt>
+                                    <dd id="receiptBoatModel">—</dd>
+                                </div>
+
+                            </dl>
+
+                        </section>
+
+
+                        <section class="quote-receipt-group quote-receipt-group-wide">
+
+                            <h3>Project</h3>
+
+                            <dl class="quote-receipt-list quote-receipt-project-list">
+
+                                <div>
+                                    <dt>Service</dt>
+                                    <dd id="receiptService">—</dd>
+                                </div>
+
+                                <div>
+                                    <dt>Photos Attached</dt>
+                                    <dd id="receiptPhotoCount">—</dd>
+                                </div>
+
+                                <div class="quote-receipt-description">
+                                    <dt>Project Description</dt>
+                                    <dd id="receiptDetails">—</dd>
+                                </div>
+
+                            </dl>
+
+                        </section>
+
+                    </div>
+
+
+                    <div class="quote-receipt-actions">
+
+                        <button
+                            type="button"
+                            class="button button-navy"
+                            id="printQuoteReceipt"
+                        >
+                            Print / Save Receipt
+                        </button>
+
+                        <button
+                            type="button"
+                            class="button quote-receipt-secondary-button"
+                            id="submitAnotherQuote"
+                        >
+                            Submit Another Request
+                        </button>
+
+                        <a
+                            href="../index.html"
+                            class="quote-receipt-home-link"
+                        >
+                            Return Home
+                        </a>
+
+                    </div>
+
+                </section>
+
             </div>
 
         </section>
+
 
 
         <section class="process-section">
@@ -664,9 +1058,13 @@
 
                     <article class="process-step reveal">
 
-                        <span class="process-number">01</span>
+                        <span class="process-number">
+                            01
+                        </span>
 
-                        <h3>Your Boat</h3>
+                        <h3>
+                            Your Boat
+                        </h3>
 
                         <p>
                             Share the boat year,
@@ -679,9 +1077,13 @@
 
                     <article class="process-step reveal">
 
-                        <span class="process-number">02</span>
+                        <span class="process-number">
+                            02
+                        </span>
 
-                        <h3>The Work</h3>
+                        <h3>
+                            The Work
+                        </h3>
 
                         <p>
                             Tell us whether you need
@@ -695,9 +1097,13 @@
 
                     <article class="process-step reveal">
 
-                        <span class="process-number">03</span>
+                        <span class="process-number">
+                            03
+                        </span>
 
-                        <h3>Photos</h3>
+                        <h3>
+                            Photos
+                        </h3>
 
                         <p>
                             Pictures of the boat,
@@ -711,9 +1117,13 @@
 
                     <article class="process-step reveal">
 
-                        <span class="process-number">04</span>
+                        <span class="process-number">
+                            04
+                        </span>
 
-                        <h3>Details</h3>
+                        <h3>
+                            Details
+                        </h3>
 
                         <p>
                             Mention any concerns,
@@ -729,6 +1139,7 @@
             </div>
 
         </section>
+
 
 
         <section class="why-marys-section">
@@ -780,6 +1191,7 @@
         </section>
 
 
+
         <section class="quote-section">
 
             <div class="quote-photo-placeholder">
@@ -789,6 +1201,7 @@
                 </span>
 
             </div>
+
 
             <div class="quote-overlay"></div>
 
@@ -840,15 +1253,20 @@
     </main>
 
 
+
     <footer class="site-footer">
 
         <div class="container footer-grid">
 
             <div class="footer-main">
 
-                <div class="footer-brand-mark">M</div>
+                <div class="footer-brand-mark">
+                    M
+                </div>
 
-                <h2>Mary's Marine Canvas</h2>
+                <h2>
+                    Mary's Marine Canvas
+                </h2>
 
                 <p>
                     Boat Canvas &amp; Upholstery Services
@@ -861,33 +1279,67 @@
 
             <div class="footer-column">
 
-                <h3>Canvas</h3>
+                <h3>
+                    Canvas
+                </h3>
 
-                <a href="services.html#boat-canvas">Biminis</a>
-                <a href="services.html#boat-canvas">Navy Tops</a>
-                <a href="services.html#boat-canvas">Cockpit Covers</a>
-                <a href="services.html#boat-canvas">Bridge Covers</a>
-                <a href="services.html#boat-canvas">Sail Covers</a>
+                <a href="services.html#boat-canvas">
+                    Biminis
+                </a>
+
+                <a href="services.html#boat-canvas">
+                    Navy Tops
+                </a>
+
+                <a href="services.html#boat-canvas">
+                    Cockpit Covers
+                </a>
+
+                <a href="services.html#boat-canvas">
+                    Bridge Covers
+                </a>
+
+                <a href="services.html#boat-canvas">
+                    Sail Covers
+                </a>
 
             </div>
 
 
             <div class="footer-column">
 
-                <h3>More Services</h3>
+                <h3>
+                    More Services
+                </h3>
 
-                <a href="services.html#enclosures">Enclosures</a>
-                <a href="services.html#enclosures">Dodgers</a>
-                <a href="services.html#enclosures">Clear Panels</a>
-                <a href="services.html#marine-upholstery">Marine Upholstery</a>
-                <a href="work.html">Canvas Repairs</a>
+                <a href="services.html#enclosures">
+                    Enclosures
+                </a>
+
+                <a href="services.html#enclosures">
+                    Dodgers
+                </a>
+
+                <a href="services.html#enclosures">
+                    Clear Panels
+                </a>
+
+                <a href="services.html#marine-upholstery">
+                    Marine Upholstery
+                </a>
+
+                <a href="work.html">
+                    Canvas Repairs
+                </a>
 
             </div>
 
 
             <div class="footer-column">
 
-                <h3>Contact</h3>
+                <h3>
+                    Contact
+                </h3>
 
                 <a href="tel:+19145653426">
                     914-565-3426
@@ -932,6 +1384,7 @@
     </footer>
 
 
+
     <button
         class="back-to-top"
         id="backToTop"
@@ -942,7 +1395,9 @@
     </button>
 
 
+
     <script src="../js/script.js"></script>
+    <script src="../js/contact.js"></script>
 
 </body>
 

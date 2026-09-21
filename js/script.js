@@ -1,763 +1,67 @@
 "use strict";
 
 
-document.addEventListener("DOMContentLoaded", () => {
+/* =====================================
+   SHARED SITE UTILITIES
+===================================== */
+
+window.MarysSite =
+    window.MarysSite || {};
 
 
-    /* =====================================
-       PROJECT DATA
-    ===================================== */
-
-    const projects =
-        Array.isArray(window.MarysProjects)
-            ? window.MarysProjects
-            : [];
-
-
-
-    /* =====================================
-       PAGE ELEMENTS
-    ===================================== */
-
-    const siteHeader =
-        document.querySelector(
-            ".site-header"
-        );
-
-
-    const mobileMenuButton =
-        document.getElementById(
-            "mobileMenuButton"
-        );
-
-
-    const mainNavigation =
-        document.getElementById(
-            "mainNavigation"
-        );
-
-
-    const backToTopButton =
-        document.getElementById(
-            "backToTop"
-        );
-
-
-    const portfolioGrid =
-        document.getElementById(
-            "portfolioGrid"
-        );
-
-
-    const projectCount =
-        document.getElementById(
-            "projectCount"
-        );
+window.MarysSite.prefersReducedMotion =
+    window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+    ).matches;
 
 
 
-    /* =====================================
-       IMAGE HELPERS
-    ===================================== */
+/* =====================================
+   SHARED REVEAL SYSTEM
+===================================== */
 
-    function getProjectImages(
-        project
-    ) {
+window.MarysSite.observeRevealElements =
+    function (elements) {
 
-        if (
-            Array.isArray(project.images) &&
-            project.images.length > 0
-        ) {
-
-            return project.images;
-
-        }
-
-
-        return [
-
-            {
-                src: "",
-
-                alt:
-                    project.title,
-
-                placeholder:
-                    "Project Photo"
-            }
-
-        ];
-
-    }
-
-
-
-    function createImageElement(
-        imageData,
-        options = {}
-    ) {
-
-        const {
-            lazy = true
-        } = options;
+        const revealElements =
+            Array.from(
+                elements || []
+            );
 
 
         if (
-            imageData &&
-            imageData.src
-        ) {
-
-            const image =
-                document.createElement(
-                    "img"
-                );
-
-
-            image.src =
-                imageData.src;
-
-
-            image.alt =
-                imageData.alt ||
-                "Marine project photo";
-
-
-            image.decoding =
-                "async";
-
-
-            if (lazy) {
-
-                image.loading =
-                    "lazy";
-
-            }
-
-
-            return image;
-
-        }
-
-
-
-        const placeholder =
-            document.createElement(
-                "span"
-            );
-
-
-        placeholder.textContent =
-            imageData?.placeholder ||
-            "Project Photo";
-
-
-        return placeholder;
-
-    }
-
-
-
-    function renderImageInsideContainer(
-        container,
-        imageData,
-        options = {}
-    ) {
-
-        if (!container) {
-            return;
-        }
-
-
-        container.replaceChildren();
-
-
-        container.classList.remove(
-            "placeholder-image"
-        );
-
-
-        if (
-            !imageData ||
-            !imageData.src
-        ) {
-
-            container.classList.add(
-                "placeholder-image"
-            );
-
-        }
-
-
-        container.appendChild(
-            createImageElement(
-                imageData,
-                options
-            )
-        );
-
-    }
-
-
-
-    /* =====================================
-       CREATE PROJECT CARD
-    ===================================== */
-
-    function createProjectCard(
-        project
-    ) {
-
-        const card =
-            document.createElement(
-                "button"
-            );
-
-
-        card.type =
-            "button";
-
-
-        card.classList.add(
-            "portfolio-card",
-            "reveal"
-        );
-
-
-        if (
-            project.layout === "wide"
-        ) {
-
-            card.classList.add(
-                "portfolio-card-wide"
-            );
-
-        }
-
-
-        if (
-            project.layout === "tall"
-        ) {
-
-            card.classList.add(
-                "portfolio-card-tall"
-            );
-
-        }
-
-
-        card.dataset.projectId =
-            project.id;
-
-
-        card.dataset.category =
-            project.category;
-
-
-        card.setAttribute(
-            "aria-label",
-            `View ${project.title} gallery`
-        );
-
-
-
-        const projectImages =
-            getProjectImages(
-                project
-            );
-
-
-        const firstImage =
-            projectImages[0];
-
-
-
-        /* IMAGE */
-
-        const imageContainer =
-            document.createElement(
-                "div"
-            );
-
-
-        imageContainer.classList.add(
-            "portfolio-image"
-        );
-
-
-        if (!firstImage.src) {
-
-            imageContainer.classList.add(
-                "placeholder-image"
-            );
-
-        }
-
-
-        imageContainer.appendChild(
-            createImageElement(
-                firstImage
-            )
-        );
-
-
-
-        /* VIEW PROJECT OVERLAY */
-
-        const viewProject =
-            document.createElement(
-                "span"
-            );
-
-
-        viewProject.classList.add(
-            "portfolio-view-project"
-        );
-
-
-        viewProject.textContent =
-            "View Project";
-
-
-        imageContainer.appendChild(
-            viewProject
-        );
-
-
-
-        /* PHOTO COUNT */
-
-        if (
-            projectImages.length > 1
-        ) {
-
-            const photoCount =
-                document.createElement(
-                    "span"
-                );
-
-
-            photoCount.classList.add(
-                "portfolio-photo-count"
-            );
-
-
-            photoCount.textContent =
-                `${projectImages.length} photos`;
-
-
-            imageContainer.appendChild(
-                photoCount
-            );
-
-        }
-
-
-
-        /* BEFORE / AFTER BADGE */
-
-        if (
-            project.beforeAfter &&
-            project.beforeAfter.before &&
-            project.beforeAfter.after
-        ) {
-
-            const beforeAfterBadge =
-                document.createElement(
-                    "span"
-                );
-
-
-            beforeAfterBadge.classList.add(
-                "portfolio-before-after-badge"
-            );
-
-
-            beforeAfterBadge.textContent =
-                "Before / After";
-
-
-            imageContainer.appendChild(
-                beforeAfterBadge
-            );
-
-        }
-
-
-
-        /* CAPTION */
-
-        const caption =
-            document.createElement(
-                "div"
-            );
-
-
-        caption.classList.add(
-            "portfolio-caption"
-        );
-
-
-        const captionText =
-            document.createElement(
-                "div"
-            );
-
-
-        const category =
-            document.createElement(
-                "span"
-            );
-
-
-        category.textContent =
-            project.categoryLabel;
-
-
-        const title =
-            document.createElement(
-                "h3"
-            );
-
-
-        title.textContent =
-            project.title;
-
-
-        captionText.appendChild(
-            category
-        );
-
-
-        captionText.appendChild(
-            title
-        );
-
-
-        const arrow =
-            document.createElement(
-                "span"
-            );
-
-
-        arrow.classList.add(
-            "portfolio-arrow"
-        );
-
-
-        arrow.textContent =
-            "↗";
-
-
-        arrow.setAttribute(
-            "aria-hidden",
-            "true"
-        );
-
-
-        caption.appendChild(
-            captionText
-        );
-
-
-        caption.appendChild(
-            arrow
-        );
-
-
-        card.appendChild(
-            imageContainer
-        );
-
-
-        card.appendChild(
-            caption
-        );
-
-
-        return card;
-
-    }
-
-
-
-    /* =====================================
-       PROJECT COUNT
-    ===================================== */
-
-    function updateProjectCount(
-        count
-    ) {
-
-        if (!projectCount) {
-            return;
-        }
-
-
-        const label =
-            count === 1
-                ? "project"
-                : "projects";
-
-
-        projectCount.textContent =
-            `Showing ${count} ${label}`;
-
-    }
-
-
-
-    /* =====================================
-       RENDER PROJECTS
-    ===================================== */
-
-    function renderProjects() {
-
-        if (!portfolioGrid) {
-            return;
-        }
-
-
-        portfolioGrid.replaceChildren();
-
-
-        projects.forEach(
-            (project) => {
-
-                portfolioGrid.appendChild(
-                    createProjectCard(
-                        project
-                    )
-                );
-
-            }
-        );
-
-
-        updateProjectCount(
-            projects.length
-        );
-
-    }
-
-
-    renderProjects();
-
-
-
-    /* =====================================
-       MOBILE MENU
-    ===================================== */
-
-    function closeMobileMenu() {
-
-        if (
-            !mobileMenuButton ||
-            !mainNavigation
+            revealElements.length === 0
         ) {
             return;
         }
 
 
-        mainNavigation.classList.remove(
-            "active"
-        );
+        if (
+            window.MarysSite
+                .prefersReducedMotion
+        ) {
 
+            revealElements.forEach(
+                (element) => {
 
-        mobileMenuButton.classList.remove(
-            "active"
-        );
-
-
-        mobileMenuButton.setAttribute(
-            "aria-expanded",
-            "false"
-        );
-
-
-        document.body.classList.remove(
-            "menu-open"
-        );
-
-    }
-
-
-
-    if (
-        mobileMenuButton &&
-        mainNavigation
-    ) {
-
-        mobileMenuButton.addEventListener(
-            "click",
-            () => {
-
-                const isOpen =
-                    mainNavigation
-                        .classList
-                        .toggle(
-                            "active"
-                        );
-
-
-                mobileMenuButton
-                    .classList
-                    .toggle(
-                        "active",
-                        isOpen
-                    );
-
-
-                mobileMenuButton
-                    .setAttribute(
-                        "aria-expanded",
-                        isOpen.toString()
-                    );
-
-
-                document.body
-                    .classList
-                    .toggle(
-                        "menu-open",
-                        isOpen
-                    );
-
-            }
-        );
-
-
-        mainNavigation
-            .querySelectorAll("a")
-            .forEach(
-                (link) => {
-
-                    link.addEventListener(
-                        "click",
-                        closeMobileMenu
+                    element.classList.add(
+                        "reveal-visible"
                     );
 
                 }
             );
 
 
-        window.addEventListener(
-            "resize",
-            () => {
-
-                if (
-                    window.innerWidth >
-                    820
-                ) {
-
-                    closeMobileMenu();
-
-                }
-
-            }
-        );
-
-    }
-
-
-
-    /* =====================================
-       HEADER
-    ===================================== */
-
-    function updateHeader() {
-
-        if (!siteHeader) {
             return;
+
         }
 
 
-        siteHeader.classList.toggle(
-            "header-scrolled",
-            window.scrollY > 40
-        );
-
-    }
-
-
-
-    /* =====================================
-       BACK TO TOP
-    ===================================== */
-
-    function updateBackToTopButton() {
-
-        if (!backToTopButton) {
-            return;
-        }
-
-
-        backToTopButton
-            .classList
-            .toggle(
-                "visible",
-                window.scrollY > 600
-            );
-
-    }
-
-
-
-    if (backToTopButton) {
-
-        backToTopButton.addEventListener(
-            "click",
-            () => {
-
-                window.scrollTo({
-
-                    top: 0,
-
-                    behavior: "smooth"
-
-                });
-
-            }
-        );
-
-    }
-
-
-
-    /* =====================================
-       SCROLL REVEAL
-    ===================================== */
-
-    const revealElements =
-        document.querySelectorAll(
-            ".reveal"
-        );
-
-
-    const prefersReducedMotion =
-        window.matchMedia(
-            "(prefers-reduced-motion: reduce)"
-        ).matches;
-
-
-
-    if (prefersReducedMotion) {
-
-        revealElements.forEach(
-            (element) => {
-
-                element.classList.add(
-                    "reveal-visible"
-                );
-
-            }
-        );
-
-    } else {
-
-        const revealObserver =
+        const observer =
             new IntersectionObserver(
                 (
                     entries,
-                    observer
+                    revealObserver
                 ) => {
 
                     entries.forEach(
@@ -775,9 +79,10 @@ document.addEventListener("DOMContentLoaded", () => {
                                     );
 
 
-                                observer.unobserve(
-                                    entry.target
-                                );
+                                revealObserver
+                                    .unobserve(
+                                        entry.target
+                                    );
 
                             }
 
@@ -799,1122 +104,291 @@ document.addEventListener("DOMContentLoaded", () => {
         revealElements.forEach(
             (element) => {
 
-                revealObserver.observe(
+                observer.observe(
                     element
                 );
 
             }
         );
 
-    }
+    };
 
 
 
-    /* =====================================
-       PROJECT FILTERS
-    ===================================== */
-
-    const filterButtons =
-        document.querySelectorAll(
-            "[data-filter]"
-        );
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
 
+        /* =====================================
+           SHARED PAGE ELEMENTS
+        ===================================== */
 
-    function getProjectCards() {
-
-        return document
-            .querySelectorAll(
-                "[data-project-id]"
-            );
-
-    }
-
-
-
-    function filterProjects(
-        selectedFilter
-    ) {
-
-        let visibleCount = 0;
-
-
-        getProjectCards()
-            .forEach(
-                (card) => {
-
-                    const shouldShow =
-                        selectedFilter ===
-                            "all" ||
-                        card.dataset.category ===
-                            selectedFilter;
-
-
-                    card.classList.toggle(
-                        "is-hidden",
-                        !shouldShow
-                    );
-
-
-                    if (shouldShow) {
-
-                        visibleCount += 1;
-
-                    }
-
-                }
+        const siteHeader =
+            document.querySelector(
+                ".site-header"
             );
 
 
-        updateProjectCount(
-            visibleCount
-        );
-
-    }
-
+        const mobileMenuButton =
+            document.getElementById(
+                "mobileMenuButton"
+            );
 
 
-    filterButtons.forEach(
-        (button) => {
+        const mainNavigation =
+            document.getElementById(
+                "mainNavigation"
+            );
 
-            button.addEventListener(
+
+        const backToTopButton =
+            document.getElementById(
+                "backToTop"
+            );
+
+
+
+        /* =====================================
+           MOBILE MENU
+        ===================================== */
+
+        function closeMobileMenu() {
+
+            if (
+                !mobileMenuButton ||
+                !mainNavigation
+            ) {
+                return;
+            }
+
+
+            mainNavigation.classList.remove(
+                "active"
+            );
+
+
+            mobileMenuButton.classList.remove(
+                "active"
+            );
+
+
+            mobileMenuButton.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+
+            document.body.classList.remove(
+                "menu-open"
+            );
+
+        }
+
+
+
+        if (
+            mobileMenuButton &&
+            mainNavigation
+        ) {
+
+            mobileMenuButton.addEventListener(
                 "click",
                 () => {
 
-                    const selectedFilter =
-                        button.dataset.filter;
+                    const isOpen =
+                        mainNavigation
+                            .classList
+                            .toggle(
+                                "active"
+                            );
 
 
-                    filterButtons.forEach(
-                        (filterButton) => {
-
-                            const isActive =
-                                filterButton ===
-                                button;
-
-
-                            filterButton
-                                .classList
-                                .toggle(
-                                    "active",
-                                    isActive
-                                );
+                    mobileMenuButton
+                        .classList
+                        .toggle(
+                            "active",
+                            isOpen
+                        );
 
 
-                            filterButton
-                                .setAttribute(
-                                    "aria-pressed",
-                                    isActive.toString()
-                                );
-
-                        }
-                    );
+                    mobileMenuButton
+                        .setAttribute(
+                            "aria-expanded",
+                            isOpen.toString()
+                        );
 
 
-                    filterProjects(
-                        selectedFilter
-                    );
+                    document.body
+                        .classList
+                        .toggle(
+                            "menu-open",
+                            isOpen
+                        );
 
                 }
             );
 
-        }
-    );
 
-
-
-    /* =====================================
-       MODAL ELEMENTS
-    ===================================== */
-
-    const projectModal =
-        document.getElementById(
-            "projectModal"
-        );
-
-
-    const projectModalDialog =
-        document.querySelector(
-            ".project-modal-dialog"
-        );
-
-
-    const projectModalClose =
-        document.getElementById(
-            "projectModalClose"
-        );
-
-
-    const projectModalTitle =
-        document.getElementById(
-            "projectModalTitle"
-        );
-
-
-    const projectModalType =
-        document.getElementById(
-            "projectModalType"
-        );
-
-
-    const projectModalDescription =
-        document.getElementById(
-            "projectModalDescription"
-        );
-
-
-    const projectModalImageContainer =
-        document.getElementById(
-            "projectModalImageContainer"
-        );
-
-
-    const galleryPrevious =
-        document.getElementById(
-            "galleryPrevious"
-        );
-
-
-    const galleryNext =
-        document.getElementById(
-            "galleryNext"
-        );
-
-
-    const galleryCounter =
-        document.getElementById(
-            "galleryCounter"
-        );
-
-
-    const galleryThumbnails =
-        document.getElementById(
-            "galleryThumbnails"
-        );
-
-
-    const projectModalQuote =
-        document.getElementById(
-            "projectModalQuote"
-        );
-
-
-    const beforeAfterSection =
-        document.getElementById(
-            "beforeAfterSection"
-        );
-
-
-    const beforeImageContainer =
-        document.getElementById(
-            "beforeImageContainer"
-        );
-
-
-    const afterImageContainer =
-        document.getElementById(
-            "afterImageContainer"
-        );
-
-
-    const modalCloseElements =
-        document.querySelectorAll(
-            "[data-modal-close]"
-        );
-
-
-    let lastFocusedElement =
-        null;
-
-
-    let activeProject =
-        null;
-
-
-    let activeProjectImages =
-        [];
-
-
-    let activeImageIndex =
-        0;
-
-
-
-    /* =====================================
-       GALLERY MAIN IMAGE
-    ===================================== */
-
-    function renderGalleryImage() {
-
-        if (
-            !projectModalImageContainer ||
-            activeProjectImages.length === 0
-        ) {
-            return;
-        }
-
-
-        const imageData =
-            activeProjectImages[
-                activeImageIndex
-            ];
-
-
-        renderImageInsideContainer(
-            projectModalImageContainer,
-            imageData,
-            {
-                lazy: false
-            }
-        );
-
-
-        if (galleryCounter) {
-
-            galleryCounter.textContent =
-                `${activeImageIndex + 1} / ${activeProjectImages.length}`;
-
-        }
-
-
-        const hasMultipleImages =
-            activeProjectImages.length >
-            1;
-
-
-        if (galleryPrevious) {
-
-            galleryPrevious.hidden =
-                !hasMultipleImages;
-
-        }
-
-
-        if (galleryNext) {
-
-            galleryNext.hidden =
-                !hasMultipleImages;
-
-        }
-
-
-        if (galleryCounter) {
-
-            galleryCounter.hidden =
-                !hasMultipleImages;
-
-        }
-
-
-        updateThumbnailState();
-
-    }
-
-
-
-    /* =====================================
-       GALLERY THUMBNAILS
-    ===================================== */
-
-    function renderGalleryThumbnails() {
-
-        if (!galleryThumbnails) {
-            return;
-        }
-
-
-        galleryThumbnails.replaceChildren();
-
-
-        if (
-            activeProjectImages.length <=
-            1
-        ) {
-
-            galleryThumbnails.hidden =
-                true;
-
-            return;
-
-        }
-
-
-        galleryThumbnails.hidden =
-            false;
-
-
-        activeProjectImages.forEach(
-            (
-                imageData,
-                index
-            ) => {
-
-                const thumbnail =
-                    document.createElement(
-                        "button"
-                    );
-
-
-                thumbnail.type =
-                    "button";
-
-
-                thumbnail.classList.add(
-                    "gallery-thumbnail"
-                );
-
-
-                thumbnail.dataset.index =
-                    index.toString();
-
-
-                thumbnail.setAttribute(
-                    "aria-label",
-                    `View photo ${index + 1}`
-                );
-
-
-                if (!imageData.src) {
-
-                    thumbnail.classList.add(
-                        "placeholder-image"
-                    );
-
-                }
-
-
-                thumbnail.appendChild(
-                    createImageElement(
-                        imageData
-                    )
-                );
-
-
-                thumbnail.addEventListener(
-                    "click",
-                    () => {
-
-                        activeImageIndex =
-                            index;
-
-
-                        renderGalleryImage();
+            mainNavigation
+                .querySelectorAll("a")
+                .forEach(
+                    (link) => {
+
+                        link.addEventListener(
+                            "click",
+                            closeMobileMenu
+                        );
 
                     }
                 );
 
 
-                galleryThumbnails.appendChild(
-                    thumbnail
-                );
+            window.addEventListener(
+                "resize",
+                () => {
 
-            }
-        );
+                    if (
+                        window.innerWidth >
+                        820
+                    ) {
 
+                        closeMobileMenu();
 
-        updateThumbnailState();
+                    }
 
-    }
+                }
+            );
 
-
-
-    function updateThumbnailState() {
-
-        if (!galleryThumbnails) {
-            return;
         }
 
 
-        const thumbnails =
-            galleryThumbnails
-                .querySelectorAll(
-                    ".gallery-thumbnail"
+
+        /* =====================================
+           HEADER
+        ===================================== */
+
+        function updateHeader() {
+
+            if (!siteHeader) {
+                return;
+            }
+
+
+            siteHeader.classList.toggle(
+                "header-scrolled",
+                window.scrollY > 40
+            );
+
+        }
+
+
+
+        /* =====================================
+           BACK TO TOP
+        ===================================== */
+
+        function updateBackToTopButton() {
+
+            if (!backToTopButton) {
+                return;
+            }
+
+
+            backToTopButton
+                .classList
+                .toggle(
+                    "visible",
+                    window.scrollY > 600
                 );
 
-
-        thumbnails.forEach(
-            (
-                thumbnail,
-                index
-            ) => {
-
-                const isActive =
-                    index ===
-                    activeImageIndex;
+        }
 
 
-                thumbnail
-                    .classList
-                    .toggle(
-                        "active",
-                        isActive
-                    );
 
+        if (backToTopButton) {
 
-                if (isActive) {
+            backToTopButton.addEventListener(
+                "click",
+                () => {
 
-                    thumbnail.setAttribute(
-                        "aria-current",
-                        "true"
-                    );
+                    window.scrollTo({
 
-
-                    thumbnail.scrollIntoView({
+                        top: 0,
 
                         behavior:
-                            prefersReducedMotion
+                            window.MarysSite
+                                .prefersReducedMotion
                                 ? "auto"
-                                : "smooth",
-
-                        block:
-                            "nearest",
-
-                        inline:
-                            "nearest"
+                                : "smooth"
 
                     });
 
-                } else {
-
-                    thumbnail.removeAttribute(
-                        "aria-current"
-                    );
-
-                }
-
-            }
-        );
-
-    }
-
-
-
-    /* =====================================
-       GALLERY NAVIGATION
-    ===================================== */
-
-    function showPreviousImage() {
-
-        if (
-            activeProjectImages.length <=
-            1
-        ) {
-            return;
-        }
-
-
-        activeImageIndex =
-            (
-                activeImageIndex -
-                1 +
-                activeProjectImages.length
-            ) %
-            activeProjectImages.length;
-
-
-        renderGalleryImage();
-
-    }
-
-
-
-    function showNextImage() {
-
-        if (
-            activeProjectImages.length <=
-            1
-        ) {
-            return;
-        }
-
-
-        activeImageIndex =
-            (
-                activeImageIndex +
-                1
-            ) %
-            activeProjectImages.length;
-
-
-        renderGalleryImage();
-
-    }
-
-
-
-    if (galleryPrevious) {
-
-        galleryPrevious.addEventListener(
-            "click",
-            showPreviousImage
-        );
-
-    }
-
-
-    if (galleryNext) {
-
-        galleryNext.addEventListener(
-            "click",
-            showNextImage
-        );
-
-    }
-
-
-
-    /* =====================================
-       TOUCH / SWIPE GALLERY
-    ===================================== */
-
-    let touchStartX =
-        0;
-
-
-    let touchStartY =
-        0;
-
-
-    let touchEndX =
-        0;
-
-
-    let touchEndY =
-        0;
-
-
-    const minimumSwipeDistance =
-        50;
-
-
-
-    function handleGallerySwipe() {
-
-        const horizontalDistance =
-            touchEndX -
-            touchStartX;
-
-
-        const verticalDistance =
-            touchEndY -
-            touchStartY;
-
-
-        if (
-            Math.abs(horizontalDistance) <
-            minimumSwipeDistance
-        ) {
-
-            return;
-
-        }
-
-
-        if (
-            Math.abs(horizontalDistance) <=
-            Math.abs(verticalDistance)
-        ) {
-
-            return;
-
-        }
-
-
-        if (
-            horizontalDistance < 0
-        ) {
-
-            showNextImage();
-
-        } else {
-
-            showPreviousImage();
-
-        }
-
-    }
-
-
-
-    if (projectModalImageContainer) {
-
-        projectModalImageContainer
-            .addEventListener(
-                "touchstart",
-                (event) => {
-
-                    if (
-                        event.touches.length !==
-                        1
-                    ) {
-
-                        return;
-
-                    }
-
-
-                    touchStartX =
-                        event.touches[0]
-                            .clientX;
-
-
-                    touchStartY =
-                        event.touches[0]
-                            .clientY;
-
-
-                    touchEndX =
-                        touchStartX;
-
-
-                    touchEndY =
-                        touchStartY;
-
-                },
-                {
-                    passive: true
                 }
             );
 
-
-        projectModalImageContainer
-            .addEventListener(
-                "touchmove",
-                (event) => {
-
-                    if (
-                        event.touches.length !==
-                        1
-                    ) {
-
-                        return;
-
-                    }
+        }
 
 
-                    touchEndX =
-                        event.touches[0]
-                            .clientX;
 
+        /* =====================================
+           INITIAL REVEALS
+        ===================================== */
 
-                    touchEndY =
-                        event.touches[0]
-                            .clientY;
-
-                },
-                {
-                    passive: true
-                }
+        window.MarysSite
+            .observeRevealElements(
+                document.querySelectorAll(
+                    ".reveal"
+                )
             );
 
 
-        projectModalImageContainer
-            .addEventListener(
-                "touchend",
-                () => {
 
-                    handleGallerySwipe();
+        /* =====================================
+           ESCAPE CLOSES MOBILE MENU
+        ===================================== */
 
-                },
-                {
-                    passive: true
-                }
-            );
-
-    }
-
-
-
-    /* =====================================
-       BEFORE / AFTER
-    ===================================== */
-
-    function renderBeforeAfter(
-        project
-    ) {
-
-        if (
-            !beforeAfterSection ||
-            !beforeImageContainer ||
-            !afterImageContainer
-        ) {
-            return;
-        }
-
-
-        const comparison =
-            project.beforeAfter;
-
-
-        const hasBeforeAfter =
-            comparison &&
-            comparison.before &&
-            comparison.after;
-
-
-        if (!hasBeforeAfter) {
-
-            beforeAfterSection.hidden =
-                true;
-
-
-            beforeImageContainer
-                .replaceChildren();
-
-
-            afterImageContainer
-                .replaceChildren();
-
-
-            return;
-
-        }
-
-
-        beforeAfterSection.hidden =
-            false;
-
-
-        renderImageInsideContainer(
-            beforeImageContainer,
-            comparison.before
-        );
-
-
-        renderImageInsideContainer(
-            afterImageContainer,
-            comparison.after
-        );
-
-    }
-
-
-
-    /* =====================================
-       OPEN MODAL
-    ===================================== */
-
-    function openProjectModal(
-        project
-    ) {
-
-        if (
-            !projectModal ||
-            !project
-        ) {
-            return;
-        }
-
-
-        activeProject =
-            project;
-
-
-        activeProjectImages =
-            getProjectImages(
-                project
-            );
-
-
-        activeImageIndex =
-            0;
-
-
-        lastFocusedElement =
-            document.activeElement;
-
-
-        if (projectModalTitle) {
-
-            projectModalTitle.textContent =
-                project.title;
-
-        }
-
-
-        if (projectModalType) {
-
-            projectModalType.textContent =
-                project.categoryLabel;
-
-        }
-
-
-        if (
-            projectModalDescription
-        ) {
-
-            projectModalDescription.textContent =
-                project.description;
-
-        }
-
-
-        renderGalleryThumbnails();
-
-
-        renderGalleryImage();
-
-
-        renderBeforeAfter(
-            project
-        );
-
-
-        projectModal.hidden =
-            false;
-
-
-        document.body.classList.add(
-            "modal-open"
-        );
-
-
-        if (projectModalDialog) {
-
-            projectModalDialog.scrollTop =
-                0;
-
-        }
-
-
-        if (projectModalClose) {
-
-            projectModalClose.focus();
-
-        }
-
-    }
-
-
-
-    /* =====================================
-       CLOSE MODAL
-    ===================================== */
-
-    function closeProjectModal() {
-
-        if (
-            !projectModal ||
-            projectModal.hidden
-        ) {
-            return;
-        }
-
-
-        projectModal.hidden =
-            true;
-
-
-        document.body.classList.remove(
-            "modal-open"
-        );
-
-
-        activeProject =
-            null;
-
-
-        activeProjectImages =
-            [];
-
-
-        activeImageIndex =
-            0;
-
-
-        if (
-            beforeAfterSection
-        ) {
-
-            beforeAfterSection.hidden =
-                true;
-
-        }
-
-
-        if (
-            lastFocusedElement &&
-            typeof
-                lastFocusedElement
-                    .focus ===
-                "function"
-        ) {
-
-            lastFocusedElement.focus();
-
-        }
-
-    }
-
-
-
-    /* =====================================
-       PROJECT CARD CLICK
-    ===================================== */
-
-    if (portfolioGrid) {
-
-        portfolioGrid.addEventListener(
-            "click",
+        document.addEventListener(
+            "keydown",
             (event) => {
-
-                const card =
-                    event.target.closest(
-                        "[data-project-id]"
-                    );
-
-
-                if (!card) {
-                    return;
-                }
-
-
-                const project =
-                    projects.find(
-                        (item) =>
-                            item.id ===
-                            card.dataset.projectId
-                    );
-
-
-                openProjectModal(
-                    project
-                );
-
-            }
-        );
-
-    }
-
-
-
-    /* =====================================
-       MODAL CLOSE EVENTS
-    ===================================== */
-
-    if (projectModalClose) {
-
-        projectModalClose.addEventListener(
-            "click",
-            closeProjectModal
-        );
-
-    }
-
-
-    modalCloseElements.forEach(
-        (element) => {
-
-            element.addEventListener(
-                "click",
-                closeProjectModal
-            );
-
-        }
-    );
-
-
-    if (projectModalQuote) {
-
-        projectModalQuote.addEventListener(
-            "click",
-            closeProjectModal
-        );
-
-    }
-
-
-
-    /* =====================================
-       KEYBOARD CONTROLS
-    ===================================== */
-
-    document.addEventListener(
-        "keydown",
-        (event) => {
-
-            const modalIsOpen =
-                projectModal &&
-                !projectModal.hidden;
-
-
-            if (modalIsOpen) {
-
-                if (
-                    event.key ===
-                    "ArrowLeft"
-                ) {
-
-                    showPreviousImage();
-
-                    return;
-
-                }
-
-
-                if (
-                    event.key ===
-                    "ArrowRight"
-                ) {
-
-                    showNextImage();
-
-                    return;
-
-                }
-
 
                 if (
                     event.key ===
                     "Escape"
                 ) {
 
-                    closeProjectModal();
-
-                    return;
+                    closeMobileMenu();
 
                 }
 
             }
+        );
 
 
-            if (
-                event.key ===
-                "Escape"
-            ) {
 
-                closeMobileMenu();
+        /* =====================================
+           SCROLL EVENTS
+        ===================================== */
 
-            }
+        function handleScroll() {
+
+            updateHeader();
+
+            updateBackToTopButton();
 
         }
-    );
 
 
+        window.addEventListener(
+            "scroll",
+            handleScroll,
+            {
+                passive: true
+            }
+        );
 
-    /* =====================================
-       SCROLL EVENTS
-    ===================================== */
 
-    function handleScroll() {
-
-        updateHeader();
-
-        updateBackToTopButton();
+        handleScroll();
 
     }
-
-
-    window.addEventListener(
-        "scroll",
-        handleScroll,
-        {
-            passive: true
-        }
-    );
-
-
-    handleScroll();
-
-});
+);
