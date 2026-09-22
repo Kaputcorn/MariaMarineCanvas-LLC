@@ -1,20 +1,13 @@
 "use strict";
 
-
 import crypto from "node:crypto";
 
 import cors from "cors";
-
 import dotenv from "dotenv";
-
 import express from "express";
-
 import rateLimit from "express-rate-limit";
-
 import helmet from "helmet";
-
 import multer from "multer";
-
 import nodemailer from "nodemailer";
 
 import {
@@ -27,7 +20,6 @@ import {
 
 
 dotenv.config();
-
 
 
 /* =====================================
@@ -44,7 +36,6 @@ const PORT =
     ) || 3000;
 
 
-
 /* =====================================
    SECURITY
 ===================================== */
@@ -57,7 +48,6 @@ app.disable(
 app.use(
     helmet()
 );
-
 
 
 const allowedOrigins =
@@ -79,7 +69,6 @@ const allowedOrigins =
     );
 
 
-
 app.use(
     cors({
         origin(
@@ -88,8 +77,8 @@ app.use(
         ) {
 
             /*
-                Requests without a browser Origin
-                such as curl are allowed.
+                Requests without a browser Origin,
+                such as curl, are allowed.
             */
 
             if (!origin) {
@@ -136,14 +125,14 @@ app.use(
 );
 
 
-
 const quoteRateLimiter =
     rateLimit({
 
         windowMs:
             15 * 60 * 1000,
 
-        limit: 5,
+        limit:
+            5,
 
         standardHeaders:
             "draft-7",
@@ -153,6 +142,7 @@ const quoteRateLimiter =
 
         message: {
             success: false,
+
             message:
                 "Too many quote requests were submitted. Please wait a few minutes and try again."
         }
@@ -160,9 +150,8 @@ const quoteRateLimiter =
     });
 
 
-
 /* =====================================
-   FILE SETTINGS
+   FILE / REQUEST SETTINGS
 ===================================== */
 
 const MAX_PHOTOS =
@@ -177,13 +166,20 @@ const MAX_TOTAL_PHOTO_SIZE =
     20 * 1024 * 1024;
 
 
+/*
+    Allows the 20 MB photo total plus room for
+    multipart boundaries and normal form fields.
+*/
+const MAX_REQUEST_SIZE =
+    21 * 1024 * 1024;
+
+
 const allowedImageTypes =
     new Set([
         "image/jpeg",
         "image/png",
         "image/webp"
     ]);
-
 
 
 const upload =
@@ -204,6 +200,67 @@ const upload =
 
     });
 
+
+/*
+    Reject oversized multipart requests before
+    Multer buffers uploaded images in memory.
+
+    Browsers and curl normally provide Content-Length
+    for multipart/form-data requests.
+*/
+function enforceRequestSize(
+    request,
+    response,
+    next
+) {
+
+    const contentLengthHeader =
+        request.get(
+            "content-length"
+        );
+
+
+    if (!contentLengthHeader) {
+
+        next();
+
+        return;
+
+    }
+
+
+    const contentLength =
+        Number(
+            contentLengthHeader
+        );
+
+
+    if (
+        Number.isFinite(
+            contentLength
+        ) &&
+        contentLength >
+            MAX_REQUEST_SIZE
+    ) {
+
+        return response
+            .status(413)
+            .json({
+
+                success:
+                    false,
+
+                message:
+                    "Quote request is too large. Photo attachments cannot exceed 20 MB total."
+
+            });
+
+    }
+
+
+    next();
+
+}
 
 
 /* =====================================
@@ -237,6 +294,7 @@ const quoteSchema =
         email:
             z.union([
                 z.literal(""),
+
                 z.string()
                     .trim()
                     .email()
@@ -457,7 +515,6 @@ const quoteSchema =
     );
 
 
-
 /* =====================================
    EMAIL
 ===================================== */
@@ -479,7 +536,6 @@ const transporter =
         }
 
     });
-
 
 
 /* =====================================
@@ -517,7 +573,6 @@ function escapeHtml(
 }
 
 
-
 function createConfirmationId() {
 
     const date =
@@ -545,7 +600,6 @@ function createConfirmationId() {
     );
 
 }
-
 
 
 async function validateUploadedPhotos(
@@ -605,7 +659,6 @@ async function validateUploadedPhotos(
 }
 
 
-
 /* =====================================
    HEALTH CHECK
 ===================================== */
@@ -619,7 +672,8 @@ app.get(
 
         response.json({
 
-            success: true,
+            success:
+                true,
 
             service:
                 "Mary's Marine Canvas Quote API"
@@ -630,13 +684,18 @@ app.get(
 );
 
 
-
 /* =====================================
    QUOTE ROUTE
 ===================================== */
 
 app.post(
     "/api/quote",
+
+    /*
+        Check the entire HTTP request before
+        processing/buffering the multipart upload.
+    */
+    enforceRequestSize,
 
     quoteRateLimiter,
 
@@ -682,7 +741,6 @@ app.post(
                 parsed.data;
 
 
-
             /*
                 Honeypot field.
                 Human customers never see this field.
@@ -694,7 +752,8 @@ app.post(
 
                 return response.json({
 
-                    success: true,
+                    success:
+                        true,
 
                     confirmationId:
                         createConfirmationId()
@@ -702,7 +761,6 @@ app.post(
                 });
 
             }
-
 
 
             const files =
@@ -716,7 +774,6 @@ app.post(
             await validateUploadedPhotos(
                 files
             );
-
 
 
             if (
@@ -744,14 +801,12 @@ app.post(
             }
 
 
-
             const confirmationId =
                 createConfirmationId();
 
 
             const submittedAt =
                 new Date();
-
 
 
             const contactPreference = {
@@ -768,7 +823,6 @@ app.post(
             }[
                 data.contactMethod
             ];
-
 
 
             const textMessage =
@@ -801,7 +855,6 @@ ${submittedAt.toLocaleString("en-US", {
     timeZone: "America/New_York"
 })}
 `;
-
 
 
             const htmlMessage =
@@ -892,7 +945,6 @@ ${submittedAt.toLocaleString("en-US", {
 `;
 
 
-
             const attachments =
                 files.map(
                     (
@@ -911,7 +963,6 @@ ${submittedAt.toLocaleString("en-US", {
 
                     })
                 );
-
 
 
             await transporter.sendMail({
@@ -939,7 +990,6 @@ ${submittedAt.toLocaleString("en-US", {
                 attachments
 
             });
-
 
 
             return response.json({
@@ -1014,7 +1064,6 @@ ${submittedAt.toLocaleString("en-US", {
 
     }
 );
-
 
 
 /* =====================================
@@ -1095,7 +1144,6 @@ app.use(
 
     }
 );
-
 
 
 /* =====================================
