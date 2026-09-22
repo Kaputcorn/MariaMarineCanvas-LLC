@@ -25,3 +25,5 @@ dist/
 build/
 tmp/
 temp/
+# Local project planning/status file
+PROJECT-STATUS.md
