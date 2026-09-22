@@ -46,6 +46,39 @@ const PORT =
 
 
 /* =====================================
+   SAFE HTTP ERRORS
+===================================== */
+
+class PublicHttpError extends Error {
+
+    constructor(
+        statusCode,
+        publicMessage
+    ) {
+
+        super(
+            publicMessage
+        );
+
+
+        this.name =
+            "PublicHttpError";
+
+
+        this.statusCode =
+            statusCode;
+
+
+        this.publicMessage =
+            publicMessage;
+
+    }
+
+}
+
+
+
+/* =====================================
    SECURITY
 ===================================== */
 
@@ -92,7 +125,9 @@ app.use(
                 such as curl, are allowed.
             */
 
-            if (!origin) {
+            if (
+                !origin
+            ) {
 
                 callback(
                     null,
@@ -121,8 +156,9 @@ app.use(
 
 
             callback(
-                new Error(
-                    "Origin not allowed."
+                new PublicHttpError(
+                    403,
+                    "Request origin is not allowed."
                 )
             );
 
@@ -136,13 +172,13 @@ app.use(
 );
 
 
+
 /*
     Render public traffic passes through Cloudflare.
 
     Cloudflare supplies CF-Connecting-IP with the
-    original client IP address. Using that address
-    prevents Render's changing proxy addresses from
-    creating new rate-limit buckets.
+    original client IP address. This keeps the
+    quote rate-limit bucket stable behind Render.
 */
 function getRateLimitKey(
     request
@@ -691,7 +727,8 @@ async function validateUploadedPhotos(
         MAX_TOTAL_PHOTO_SIZE
     ) {
 
-        throw new Error(
+        throw new PublicHttpError(
+            413,
             "Photo attachments cannot exceed 20 MB total."
         );
 
@@ -716,8 +753,9 @@ async function validateUploadedPhotos(
             )
         ) {
 
-            throw new Error(
-                `Unsupported image file: ${file.originalname}`
+            throw new PublicHttpError(
+                400,
+                "Only JPG, PNG, and WEBP image files are allowed."
             );
 
         }
@@ -861,7 +899,7 @@ app.post(
                             false,
 
                         message:
-                            "Email delivery is not configured yet."
+                            "Quote email service is temporarily unavailable. Please try again later or call 914-565-3426."
 
                     });
 
@@ -1032,31 +1070,61 @@ ${submittedAt.toLocaleString("en-US", {
                 );
 
 
-            await transporter.sendMail({
+            try {
 
-                from:
-                    `"Mary's Marine Canvas Website" <${process.env.EMAIL_USER}>`,
+                await transporter.sendMail({
 
-                to:
-                    process.env.QUOTE_RECIPIENT ||
-                    process.env.EMAIL_USER,
+                    from:
+                        `"Mary's Marine Canvas Website" <${process.env.EMAIL_USER}>`,
 
-                replyTo:
-                    data.email ||
-                    undefined,
+                    to:
+                        process.env.QUOTE_RECIPIENT ||
+                        process.env.EMAIL_USER,
 
-                subject:
-                    `New Quote Request - ${data.name} - ${confirmationId}`,
+                    replyTo:
+                        data.email ||
+                        undefined,
 
-                text:
-                    textMessage,
+                    subject:
+                        `New Quote Request - ${data.name} - ${confirmationId}`,
 
-                html:
-                    htmlMessage,
+                    text:
+                        textMessage,
 
-                attachments
+                    html:
+                        htmlMessage,
 
-            });
+                    attachments
+
+                });
+
+            } catch (
+                emailError
+            ) {
+
+                /*
+                    Full technical details remain in
+                    Render logs only.
+                */
+                console.error(
+                    "Quote email delivery failed:",
+                    emailError
+                );
+
+
+                return response
+                    .status(502)
+                    .json({
+
+                        success:
+                            false,
+
+                        message:
+                            "We couldn't send your quote request. Please try again or call 914-565-3426."
+
+                    });
+
+            }
 
 
             return response.json({
@@ -1109,8 +1177,38 @@ ${submittedAt.toLocaleString("en-US", {
             error
         ) {
 
+            /*
+                Expected, customer-safe errors.
+            */
+            if (
+                error instanceof
+                PublicHttpError
+            ) {
+
+                return response
+                    .status(
+                        error.statusCode
+                    )
+                    .json({
+
+                        success:
+                            false,
+
+                        message:
+                            error.publicMessage
+
+                    });
+
+            }
+
+
+            /*
+                Unexpected errors are logged in full
+                server-side, but never returned to the
+                customer.
+            */
             console.error(
-                "Quote submission error:",
+                "Unexpected quote submission error:",
                 error
             );
 
@@ -1123,7 +1221,7 @@ ${submittedAt.toLocaleString("en-US", {
                         false,
 
                     message:
-                        "We couldn't send your quote request. Please try again or call 914-565-3426."
+                        "A server error occurred. Please try again later or call 914-565-3426."
 
                 });
 
@@ -1135,7 +1233,7 @@ ${submittedAt.toLocaleString("en-US", {
 
 
 /* =====================================
-   MULTER / SERVER ERRORS
+   SERVER ERROR HANDLER
 ===================================== */
 
 app.use(
@@ -1146,6 +1244,9 @@ app.use(
         next
     ) => {
 
+        /*
+            Multer-controlled upload errors.
+        */
         if (
             error instanceof
             multer.MulterError
@@ -1157,7 +1258,7 @@ app.use(
             ) {
 
                 return response
-                    .status(400)
+                    .status(413)
                     .json({
 
                         success:
@@ -1190,10 +1291,60 @@ app.use(
 
             }
 
+
+            console.error(
+                "Unhandled Multer error:",
+                error
+            );
+
+
+            return response
+                .status(400)
+                .json({
+
+                    success:
+                        false,
+
+                    message:
+                        "The uploaded files could not be processed."
+
+                });
+
         }
 
 
+        /*
+            Safe errors generated intentionally by
+            security middleware such as CORS.
+        */
+        if (
+            error instanceof
+            PublicHttpError
+        ) {
+
+            return response
+                .status(
+                    error.statusCode
+                )
+                .json({
+
+                    success:
+                        false,
+
+                    message:
+                        error.publicMessage
+
+                });
+
+        }
+
+
+        /*
+            Everything else is logged on the server
+            but hidden from the customer.
+        */
         console.error(
+            "Unhandled server error:",
             error
         );
 
