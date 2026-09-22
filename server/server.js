@@ -1,13 +1,20 @@
 "use strict";
 
+
 import crypto from "node:crypto";
 
 import cors from "cors";
+
 import dotenv from "dotenv";
+
 import express from "express";
+
 import rateLimit from "express-rate-limit";
+
 import helmet from "helmet";
+
 import multer from "multer";
+
 import nodemailer from "nodemailer";
 
 import {
@@ -20,6 +27,7 @@ import {
 
 
 dotenv.config();
+
 
 
 /* =====================================
@@ -36,6 +44,7 @@ const PORT =
     ) || 3000;
 
 
+
 /* =====================================
    SECURITY
 ===================================== */
@@ -48,6 +57,7 @@ app.disable(
 app.use(
     helmet()
 );
+
 
 
 const allowedOrigins =
@@ -67,6 +77,7 @@ const allowedOrigins =
                 )
         ]
     );
+
 
 
 app.use(
@@ -125,6 +136,46 @@ app.use(
 );
 
 
+/*
+    Render public traffic passes through Cloudflare.
+
+    Cloudflare supplies CF-Connecting-IP with the
+    original client IP address. Using that address
+    prevents Render's changing proxy addresses from
+    creating new rate-limit buckets.
+*/
+function getRateLimitKey(
+    request
+) {
+
+    const cloudflareIp =
+        request.get(
+            "cf-connecting-ip"
+        );
+
+
+    if (
+        cloudflareIp
+    ) {
+
+        return cloudflareIp
+            .trim();
+
+    }
+
+
+    /*
+        Local-development fallback.
+    */
+    return (
+        request.socket.remoteAddress ||
+        "unknown"
+    );
+
+}
+
+
+
 const quoteRateLimiter =
     rateLimit({
 
@@ -140,14 +191,21 @@ const quoteRateLimiter =
         legacyHeaders:
             false,
 
+        keyGenerator:
+            getRateLimitKey,
+
         message: {
-            success: false,
+
+            success:
+                false,
 
             message:
                 "Too many quote requests were submitted. Please wait a few minutes and try again."
+
         }
 
     });
+
 
 
 /* =====================================
@@ -167,8 +225,9 @@ const MAX_TOTAL_PHOTO_SIZE =
 
 
 /*
-    Allows the 20 MB photo total plus room for
-    multipart boundaries and normal form fields.
+    Allows the 20 MB photo total plus room
+    for multipart boundaries and normal
+    quote-form fields.
 */
 const MAX_REQUEST_SIZE =
     21 * 1024 * 1024;
@@ -180,6 +239,7 @@ const allowedImageTypes =
         "image/png",
         "image/webp"
     ]);
+
 
 
 const upload =
@@ -201,12 +261,13 @@ const upload =
     });
 
 
+
 /*
     Reject oversized multipart requests before
     Multer buffers uploaded images in memory.
 
-    Browsers and curl normally provide Content-Length
-    for multipart/form-data requests.
+    Browsers and curl normally provide
+    Content-Length for multipart requests.
 */
 function enforceRequestSize(
     request,
@@ -220,7 +281,9 @@ function enforceRequestSize(
         );
 
 
-    if (!contentLengthHeader) {
+    if (
+        !contentLengthHeader
+    ) {
 
         next();
 
@@ -261,6 +324,7 @@ function enforceRequestSize(
     next();
 
 }
+
 
 
 /* =====================================
@@ -515,6 +579,7 @@ const quoteSchema =
     );
 
 
+
 /* =====================================
    EMAIL
 ===================================== */
@@ -536,6 +601,7 @@ const transporter =
         }
 
     });
+
 
 
 /* =====================================
@@ -573,6 +639,7 @@ function escapeHtml(
 }
 
 
+
 function createConfirmationId() {
 
     const date =
@@ -600,6 +667,7 @@ function createConfirmationId() {
     );
 
 }
+
 
 
 async function validateUploadedPhotos(
@@ -659,6 +727,7 @@ async function validateUploadedPhotos(
 }
 
 
+
 /* =====================================
    HEALTH CHECK
 ===================================== */
@@ -684,6 +753,7 @@ app.get(
 );
 
 
+
 /* =====================================
    QUOTE ROUTE
 ===================================== */
@@ -691,10 +761,6 @@ app.get(
 app.post(
     "/api/quote",
 
-    /*
-        Check the entire HTTP request before
-        processing/buffering the multipart upload.
-    */
     enforceRequestSize,
 
     quoteRateLimiter,
@@ -717,7 +783,9 @@ app.post(
                 );
 
 
-            if (!parsed.success) {
+            if (
+                !parsed.success
+            ) {
 
                 return response
                     .status(400)
@@ -745,7 +813,6 @@ app.post(
                 Honeypot field.
                 Human customers never see this field.
             */
-
             if (
                 data.website
             ) {
@@ -1066,6 +1133,7 @@ ${submittedAt.toLocaleString("en-US", {
 );
 
 
+
 /* =====================================
    MULTER / SERVER ERRORS
 ===================================== */
@@ -1144,6 +1212,7 @@ app.use(
 
     }
 );
+
 
 
 /* =====================================
