@@ -115,99 +115,6 @@
 }
 
 
-/*
-    Phase 6.7 — Initial layout reservation
-
-    The Work page builds its real project cards from JavaScript.
-    These shells occupy the same grid geometry before that happens,
-    preventing the sections below the portfolio from jumping during
-    the first render.
-*/
-
-.portfolio-loading-card {
-    grid-column:
-        span 6;
-
-    min-width: 0;
-
-    pointer-events: none;
-}
-
-
-.portfolio-loading-card-wide {
-    grid-column:
-        span 8;
-}
-
-
-.portfolio-loading-card-tall {
-    grid-column:
-        span 4;
-}
-
-
-.portfolio-loading-image {
-    min-height: 340px;
-
-    background:
-        var(--navy-deep);
-}
-
-
-.portfolio-loading-card-wide
-.portfolio-loading-image {
-    min-height: 480px;
-}
-
-
-.portfolio-loading-card-tall
-.portfolio-loading-image {
-    min-height: 600px;
-}
-
-
-.portfolio-loading-caption {
-    min-height: 95px;
-
-    padding:
-        18px 4px 34px;
-
-    box-sizing:
-        border-box;
-}
-
-
-.portfolio-loading-line {
-    display: block;
-
-    height: 10px;
-
-    border-radius:
-        100px;
-
-    background:
-        rgba(245, 242, 234, 0.1);
-}
-
-
-.portfolio-loading-line-small {
-    width: 82px;
-
-    margin-bottom: 9px;
-}
-
-
-.portfolio-loading-line-large {
-    width:
-        min(220px, 72%);
-
-    height: 24px;
-
-    background:
-        rgba(245, 242, 234, 0.14);
-}
-
-
 .portfolio-card {
     grid-column:
         span 6;
@@ -498,13 +405,8 @@
 
     gap: 20px;
 
-    min-height: 95px;
-
     padding:
         18px 4px 34px;
-
-    box-sizing:
-        border-box;
 }
 
 
@@ -1152,10 +1054,7 @@ span:first-child {
 
     .portfolio-card,
     .portfolio-card-wide,
-    .portfolio-card-tall,
-    .portfolio-loading-card,
-    .portfolio-loading-card-wide,
-    .portfolio-loading-card-tall {
+    .portfolio-card-tall {
         grid-column:
             span 12;
     }
