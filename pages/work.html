@@ -181,7 +181,7 @@
 
             <div class="container">
 
-                <div class="section-top reveal">
+                <div class="section-top">
 
                     <div>
 
@@ -283,7 +283,105 @@
                 <div
                     class="portfolio-grid"
                     id="portfolioGrid"
-                ></div>
+                >
+                    <!--
+                        Phase 6.7 layout-reservation shells.
+
+                        The real project cards are still created from
+                        js/projects.js by js/work.js. These lightweight
+                        shells reserve the same grid geometry before
+                        JavaScript finishes loading so the sections below
+                        the portfolio do not jump downward during startup.
+                    -->
+
+                    <div
+                        class="portfolio-loading-card portfolio-loading-card-wide"
+                        aria-hidden="true"
+                    >
+                        <div class="portfolio-loading-image"></div>
+                        <div class="portfolio-loading-caption">
+                            <span class="portfolio-loading-line portfolio-loading-line-small"></span>
+                            <span class="portfolio-loading-line portfolio-loading-line-large"></span>
+                        </div>
+                    </div>
+
+                    <div
+                        class="portfolio-loading-card portfolio-loading-card-tall"
+                        aria-hidden="true"
+                    >
+                        <div class="portfolio-loading-image"></div>
+                        <div class="portfolio-loading-caption">
+                            <span class="portfolio-loading-line portfolio-loading-line-small"></span>
+                            <span class="portfolio-loading-line portfolio-loading-line-large"></span>
+                        </div>
+                    </div>
+
+                    <div
+                        class="portfolio-loading-card"
+                        aria-hidden="true"
+                    >
+                        <div class="portfolio-loading-image"></div>
+                        <div class="portfolio-loading-caption">
+                            <span class="portfolio-loading-line portfolio-loading-line-small"></span>
+                            <span class="portfolio-loading-line portfolio-loading-line-large"></span>
+                        </div>
+                    </div>
+
+                    <div
+                        class="portfolio-loading-card"
+                        aria-hidden="true"
+                    >
+                        <div class="portfolio-loading-image"></div>
+                        <div class="portfolio-loading-caption">
+                            <span class="portfolio-loading-line portfolio-loading-line-small"></span>
+                            <span class="portfolio-loading-line portfolio-loading-line-large"></span>
+                        </div>
+                    </div>
+
+                    <div
+                        class="portfolio-loading-card portfolio-loading-card-wide"
+                        aria-hidden="true"
+                    >
+                        <div class="portfolio-loading-image"></div>
+                        <div class="portfolio-loading-caption">
+                            <span class="portfolio-loading-line portfolio-loading-line-small"></span>
+                            <span class="portfolio-loading-line portfolio-loading-line-large"></span>
+                        </div>
+                    </div>
+
+                    <div
+                        class="portfolio-loading-card"
+                        aria-hidden="true"
+                    >
+                        <div class="portfolio-loading-image"></div>
+                        <div class="portfolio-loading-caption">
+                            <span class="portfolio-loading-line portfolio-loading-line-small"></span>
+                            <span class="portfolio-loading-line portfolio-loading-line-large"></span>
+                        </div>
+                    </div>
+
+                    <div
+                        class="portfolio-loading-card"
+                        aria-hidden="true"
+                    >
+                        <div class="portfolio-loading-image"></div>
+                        <div class="portfolio-loading-caption">
+                            <span class="portfolio-loading-line portfolio-loading-line-small"></span>
+                            <span class="portfolio-loading-line portfolio-loading-line-large"></span>
+                        </div>
+                    </div>
+
+                    <div
+                        class="portfolio-loading-card portfolio-loading-card-tall"
+                        aria-hidden="true"
+                    >
+                        <div class="portfolio-loading-image"></div>
+                        <div class="portfolio-loading-caption">
+                            <span class="portfolio-loading-line portfolio-loading-line-small"></span>
+                            <span class="portfolio-loading-line portfolio-loading-line-large"></span>
+                        </div>
+                    </div>
+                </div>
 
             </div>
 
@@ -754,11 +852,11 @@
          JAVASCRIPT
     ========================== -->
 
-    <script src="../js/projects.js"></script>
+    <script src="../js/projects.js" defer></script>
 
-    <script src="../js/script.js"></script>
+    <script src="../js/script.js" defer></script>
 
-    <script src="../js/work.js"></script>
+    <script src="../js/work.js" defer></script>
 
 </body>
 
