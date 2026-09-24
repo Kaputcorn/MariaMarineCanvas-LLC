@@ -1597,6 +1597,122 @@ document.addEventListener(
 
 
         /* =====================================
+           MODAL FOCUS TRAP
+        ===================================== */
+
+        function getModalFocusableElements() {
+
+            if (!projectModalDialog) {
+                return [];
+            }
+
+
+            const focusableSelector =
+                [
+                    'a[href]',
+                    'button:not([disabled])',
+                    'input:not([disabled])',
+                    'select:not([disabled])',
+                    'textarea:not([disabled])',
+                    '[tabindex]:not([tabindex="-1"])'
+                ].join(",");
+
+
+            return Array.from(
+                projectModalDialog
+                    .querySelectorAll(
+                        focusableSelector
+                    )
+            ).filter(
+                (element) =>
+                    !element.hidden &&
+                    element.getClientRects()
+                        .length > 0 &&
+                    window.getComputedStyle(
+                        element
+                    ).visibility !==
+                        "hidden"
+            );
+
+        }
+
+
+
+        function trapModalFocus(
+            event
+        ) {
+
+            const focusableElements =
+                getModalFocusableElements();
+
+
+            if (
+                focusableElements.length === 0
+            ) {
+                return;
+            }
+
+
+            const firstFocusableElement =
+                focusableElements[0];
+
+
+            const lastFocusableElement =
+                focusableElements[
+                    focusableElements.length - 1
+                ];
+
+
+            const activeElement =
+                document.activeElement;
+
+
+            const focusIsInsideModal =
+                projectModalDialog &&
+                projectModalDialog.contains(
+                    activeElement
+                );
+
+
+            if (event.shiftKey) {
+
+                if (
+                    activeElement ===
+                        firstFocusableElement ||
+                    !focusIsInsideModal
+                ) {
+
+                    event.preventDefault();
+
+
+                    lastFocusableElement.focus();
+
+                }
+
+
+                return;
+
+            }
+
+
+            if (
+                activeElement ===
+                    lastFocusableElement ||
+                !focusIsInsideModal
+            ) {
+
+                event.preventDefault();
+
+
+                firstFocusableElement.focus();
+
+            }
+
+        }
+
+
+
+        /* =====================================
            KEYBOARD CONTROLS
         ===================================== */
 
@@ -1611,6 +1727,21 @@ document.addEventListener(
 
                 if (!modalIsOpen) {
                     return;
+                }
+
+
+                if (
+                    event.key ===
+                    "Tab"
+                ) {
+
+                    trapModalFocus(
+                        event
+                    );
+
+
+                    return;
+
                 }
 
 
