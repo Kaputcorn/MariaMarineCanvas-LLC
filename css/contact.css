@@ -669,6 +669,25 @@ span {
 }
 
 
+/* Keyboard focus is placed on the hidden file input.
+   Mirror that focus onto the visible upload control. */
+
+.quote-photo-section:has(.quote-file-input:focus-visible)
+.quote-upload-area {
+    border-color:
+        var(--ocean);
+
+    background:
+        var(--white);
+
+    outline:
+        3px solid #8bb1c1;
+
+    outline-offset:
+        4px;
+}
+
+
 .quote-upload-area.is-invalid {
     border-color:
         #a63f38;
