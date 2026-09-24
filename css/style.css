@@ -17,7 +17,7 @@
     --tan-light: #d8c9b6;
 
     --text: #162026;
-    --muted: #667177;
+    --muted: #647177;
 
     --line:
         rgba(22, 32, 38, 0.14);
@@ -1142,7 +1142,7 @@ input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
     outline:
-        3px solid #8bb1c1;
+        3px solid #6b8f9f;
 
     outline-offset: 4px;
 }
