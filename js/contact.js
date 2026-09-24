@@ -39,6 +39,12 @@ document.addEventListener(
             );
 
 
+        const contactMethodGroup =
+            document.getElementById(
+                "contactMethodGroup"
+            );
+
+
         const boatYearInput =
             document.getElementById(
                 "boatYear"
@@ -431,6 +437,18 @@ document.addEventListener(
                 );
 
 
+            if (contactMethodGroup) {
+
+                contactMethodGroup.setAttribute(
+                    "aria-invalid",
+                    Boolean(
+                        message
+                    ).toString()
+                );
+
+            }
+
+
             if (errorElement) {
 
                 errorElement.textContent =
@@ -685,6 +703,16 @@ document.addEventListener(
 
                     }
                 );
+
+
+            if (contactMethodGroup) {
+
+                contactMethodGroup.setAttribute(
+                    "aria-invalid",
+                    "false"
+                );
+
+            }
 
         }
 

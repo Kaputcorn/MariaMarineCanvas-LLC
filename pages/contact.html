@@ -317,7 +317,7 @@
 
                                 <label for="quoteName">
                                     Full Name
-                                    <span class="required-mark">*</span>
+                                    <span class="required-mark" aria-hidden="true">*</span>
                                 </label>
 
                                 <input
@@ -327,6 +327,7 @@
                                     autocomplete="name"
                                     placeholder="Your name"
                                     maxlength="100"
+                                    aria-required="true"
                                     aria-describedby="quoteNameError"
                                 >
 
@@ -392,7 +393,7 @@
 
                         <p class="quote-form-note">
 
-                            <span class="required-mark">*</span>
+                            <span class="required-mark" aria-hidden="true">*</span>
 
                             Name is required, and at least one
                             contact method — phone or email —
@@ -402,14 +403,20 @@
 
                         <div class="quote-form-group quote-form-full">
 
-                            <span class="quote-field-label">
+                            <span
+                                class="quote-field-label"
+                                id="contactMethodLabel"
+                            >
                                 Preferred Contact Method
                             </span>
 
                             <div
                                 class="quote-choice-group"
+                                id="contactMethodGroup"
                                 role="radiogroup"
-                                aria-label="Preferred contact method"
+                                aria-labelledby="contactMethodLabel"
+                                aria-describedby="contactMethodError"
+                                aria-invalid="false"
                             >
 
                                 <label class="quote-choice">
@@ -547,13 +554,14 @@
 
                                 What type of work are you looking for?
 
-                                <span class="required-mark">*</span>
+                                <span class="required-mark" aria-hidden="true">*</span>
 
                             </label>
 
                             <select
                                 id="quoteService"
                                 name="service"
+                                aria-required="true"
                                 aria-describedby="quoteServiceError"
                             >
 
@@ -633,7 +641,7 @@
 
                                 Tell us about the project
 
-                                <span class="required-mark">*</span>
+                                <span class="required-mark" aria-hidden="true">*</span>
 
                             </label>
 
@@ -643,6 +651,7 @@
                                 rows="7"
                                 maxlength="2000"
                                 placeholder="Describe what you would like made, repaired, replaced, or changed..."
+                                aria-required="true"
                                 aria-describedby="quoteDetailsHelp quoteDetailsError"
                             ></textarea>
 
